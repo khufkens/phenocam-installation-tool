@@ -1,0 +1,43 @@
+#!/bin/bash
+
+#--------------------------------------------------------------------
+# This script installs all necessary configuration
+# files as required to upload images to the PhenoCam server
+# (phenocam.sr.unh.edu) on your NetCam SC/XL camera REMOTELY with
+# minimum interaction with the camera
+#
+# last updated and maintained by:
+# Koen Hufkens (January 2014) koen.hufkens@gmail.com
+#--------------------------------------------------------------------
+
+echo ""
+echo "#--------------------------------------------------------------------"
+echo "#"
+echo "# Uploading all settings to the NetCam camera!"
+echo "# [Ignore all garbage on the command line]"
+echo "#"
+echo "#--------------------------------------------------------------------"
+echo ""
+
+#--------UPLOAD INSTALLATION SCRIPT / EXECUTE -----------------------
+(
+echo open $1 2> /dev/null
+sleep 2 
+echo "$2"
+sleep 1
+echo "$3"
+sleep 1
+echo "cd /etc/config"
+sleep 1
+echo "wget http://phenocam.sr.unh.edu/data/configs/phenocam_default_install.tar.gz"
+sleep 1
+echo "gunzip phenocam_default_install.tar.gz"
+sleep 1
+echo "tar -xvf phenocam_default_install.tar"
+sleep 1
+echo "rm phenocam_default_install.tar"
+sleep 1
+echo "sh phenocam_install.sh $4 $5 $6"
+sleep 120 ) | telnet 2> /dev/null
+
+exit 0
