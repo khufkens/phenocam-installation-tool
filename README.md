@@ -35,12 +35,3 @@ The script will take care of any differences in model types, and will enable the
 Throughout the installation procedure the command prompt gives you feedback on the process. To test a succesful install it will try to upload a set of images to the PhenoCam server. If you request a site name beforehand (the data directory has to be created on the server), we can validate if the setup is pushing data correctly right after your install.
 
 In case the script does not run properly, and the configuration of the camera is not easily adjusted by running the script again, you can reboot the camera to factory defaults by pushing the reset button on the back of the camera using a small rod. Rerunning the script after a hard reset resolves most issues.
-
-***
-DISCLAIMER:
-
-ONLY USE AS INTENDED, AND AT YOUR OWN RISK. THE SOFTWARE IS NOT MADE FOOL PROOF. INPUT VARIABLES ARE NOT VALIDATED IN ANY WAY!!! PROVIDING INPUT VALUES OUTSIDE THE INTENDED RANGE WILL RESULT IN FAILURE OF THE SCRIPT.
-
-DUE TO THE LACK OF PARAMETER VALIDATION, THE SOFTWARE COMES WITHOUT ANY GUARANTEE AND THE AUTHOR CAN NOT BE HELD LIABLE FOR ANY DAMAGES DUE TO INPROPER USE OF THE SOFTWARE.
-*** 
-
