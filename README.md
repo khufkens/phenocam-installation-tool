@@ -7,15 +7,15 @@ The installation script runs within a terminal on all platforms. To open a termi
 On the command prompt of a terminal the scripts have the same syntax, in case of the windows script this would be:
 
 
-	PIT.bat IP USER PASSWORD CAMERA TIME_OFFSET TZ_FLAG CRON_START CRON_END
+	PIT.bat IP USER PASSWORD CAMERA TIME_OFFSET TZ_FLAG CRON_START CRON_END CRON_INT
 
 on Linux / Mac OSX this would read:
 
 
-	sh PIT.sh IP USER PASSWORD CAMERA TIME_OFFSET TZ_FLAG CRON_START CRON_END
+	sh PIT.sh IP USER PASSWORD CAMERA TIME_OFFSET TZ_FLAG CRON_START CRON_END CRON_INT
 or
 
-	./PIT.sh IP USER PASSWORD CAMERA TIME_OFFSET TZ_FLAG CRON_START CRON_END
+	./PIT.sh IP USER PASSWORD CAMERA TIME_OFFSET TZ_FLAG CRON_START CRON_END CRON_INT
 
 with:
 
@@ -29,7 +29,7 @@ TIME_OFFSET   | difference in hours from UTC of the timezone in which the camera
 TZ_FLAG       | a text string corresponding to the local time zone (e.g. EST)
 CRON_START    | start of the scheduled image acquisitions (e.g. 4 in the morning)
 CRON_END      | end of the scheduled image acquisitions (e.g. ten at night, so 22 in 24-h notation)
-
+CRON_INT      | interval at which to take pictures (e.g. 15, every 15 minutes - default phenocam setting is 30)
 [all parameters are required!]
 
 The script will take care of any differences in model types, and will enable the upload of infrared (IR) images by default (if available). After the install be sure to check the results by browsing to the camera's IP address. You can see that the above commands have taken effect as the name and time zone offset are mentioned in the overlay on top of the image. If you are not sure about your time zone offset a visual time zone map can be found [here](http://www.timeanddate.com/time/map/).
