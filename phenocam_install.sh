@@ -207,7 +207,7 @@ cat bak_overlay0.conf  | sed "s/TZONE/$TZONE/g" > overlay0.conf
 # this avoids resetting exposure grids on certain funky cameras
 # which have been adjusted previously but might still benefit 
 # from an update (e.g. having the meta-data pushed etc).
-factory_grid="0xffffffffffffffff"
+factory_grid="0x007e7e7e7e7e7e00"
 current_grid=`cat /dev/video/config0 | grep 'exposure_grid' | cut -d'=' -f2`
 phenocam_grid=`cat video.conf | grep 'exposure_grid' | cut -d'=' -f2`
 
