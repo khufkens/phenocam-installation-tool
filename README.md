@@ -44,6 +44,12 @@ CRON_END      | end of the scheduled image acquisitions (e.g. ten at night, so 2
 CRON_INT      | interval at which to take pictures (e.g. 15, every 15 minutes - default phenocam setting is 30)
 [all parameters are required!]
 
+An example of our in lab test camera configuration:
+
+	./PIT.sh 140.247.89.xx admin admin testcam3 -5 EST 4 22 30
+
+This configures the camera 'testcam3', located in the EST time zone (UTC -5) to take images every half hour between 4 and 22h.
+
 The script will take care of any differences in model types, and will enable the upload of infrared (IR) images by default (if available). After the install be sure to check the results by browsing to the camera's IP address. You can see that the above commands have taken effect as the name and time zone offset are mentioned in the overlay on top of the image. If you are not sure about your time zone offset a visual time zone map can be found [here](http://www.timeanddate.com/time/map/).
 
 Throughout the installation procedure the command prompt gives you feedback on the process. To test a succesful install it will try to upload a set of images to the PhenoCam server. If you request a site name beforehand (the data directory has to be created on the server), we can validate if the setup is pushing data correctly right after your install.

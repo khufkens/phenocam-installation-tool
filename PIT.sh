@@ -6,7 +6,6 @@
 # (phenocam.sr.unh.edu) on your NetCam SC/XL camera REMOTELY with
 # minimum interaction with the camera
 #
-# last updated and maintained by:
 # Koen Hufkens (January 2014) koen.hufkens@gmail.com
 #--------------------------------------------------------------------
 
@@ -38,6 +37,6 @@ sleep 1
 echo "rm phenocam_default_install.tar"
 sleep 1
 echo "sh phenocam_install.sh $4 $5 $6 $7 $8 $9"
-sleep 120 ) | telnet 2> /dev/null
+sleep 180 ) | telnet 2> /dev/null
 
 exit 0

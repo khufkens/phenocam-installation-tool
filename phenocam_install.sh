@@ -157,7 +157,6 @@ cat default_ftp.scr 		| sed "s/mycamera/$NEW_CAMERA_NAME/g" > ftp.scr
 cat default_IR_ftp.scr 		| sed "s/mycamera/$NEW_CAMERA_NAME/g" > IR_ftp.scr
 
 # rewrite everything into new files, just to be sure
-cat default_video.conf 	> video.conf
 cat default_video0.conf > video0.conf
 cat default_ntp.server 	> ntp.server
 cat default_sched0.conf > sched0.conf
@@ -214,20 +213,23 @@ phenocam_grid=`cat video.conf | grep 'exposure_grid' | cut -d'=' -f2`
 if [ "$factory_grid" != "$current_grid" ];then
 	cat video.conf | sed -e s/"$phenocam_grid"/"$current_grid"/g > tmp.conf
 	
+	echo "# We retain the old exposure grid -- just updating all other settings!"
+	echo "# [do a factory reset if this an old camera but you prefer default settings]"
+	
 	# overwrite the PhenoCam default settings with those
 	# preserving the old exposure grid
-	mv tmp.conf video.conf
+	mv tmp.conf video0.conf
 fi
 
 # dump video configuration to /dev/video/config0
 # device to adjust in memory settings
-nrfiles=`awk 'END {print NR}' video.conf`
+nrfiles=`awk 'END {print NR}' video0.conf`
 
 for i in `seq 1 $nrfiles` ;
 do
  # assign a shell variable to a awk parameter with
  # the -v statement
- awk -v p=$i 'NR==p' video.conf > /dev/video/config0
+ awk -v p=$i 'NR==p' video0.conf > /dev/video/config0
 done
 
 # dump overlay configuration to /dev/video/config0
@@ -280,7 +282,7 @@ echo ""
 config save
 
 # uploading first images, testing the upload procedure
-echo "Uploading the first images as a test... (wait 30s)"
+echo "Uploading the first images as a test... (wait 2min)"
 sh phenocam_upload.sh
 
 echo ""
