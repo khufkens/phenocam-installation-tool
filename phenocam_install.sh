@@ -6,12 +6,46 @@
 # (phenocam.sr.unh.edu) on your NetCam SC/XL camera
 #
 # NOTES: this program can be used stand alone or called remotely
-# as is done in the remote_phenocam_install.sh script. The script
+# as is done in the PIT.sh script. The script
 # will pull all installation files from a server and adjust the
 # settings on the NetCam accordingly.
 #
 # Koen Hufkens (January 2014) koen.hufkens@gmail.com
 #--------------------------------------------------------------------
+
+# -------------- BASIC ERROR TRAPS-----------------------------------
+
+if [ "$#" = "1" ]; then
+	if [ "$1" = "reset" ]; then
+		# reset video settings to factory default
+		default_video=`ls /etc/default/video0.conf* | awk -v p=1 'NR==p'`
+		echo "reset video default parameters"
+	
+		# dump video configuration to /dev/video/config0
+		# device to adjust in memory settings
+		nrfiles=`cat $default_video | awk 'END {print NR}'`
+
+		for i in `seq 1 $nrfiles` ;
+		do
+				cat $default_video | awk -v p=$i 'NR==p' > /dev/video/config0
+		done
+		
+		# copy to config folder / otherwise they won't show up on the
+		# webpage, save to flash to keep after reboot
+		cp $default_video /etc/config/video0.conf
+		config save
+		
+		exit 0
+	else
+		echo "Wrong parameter, use reset to reset the video settings!"
+		exit 0
+	fi
+fi
+
+if [ "$#" != "6" ]; then
+	echo "Not enough parameters, please check your inputs!"
+	exit 0
+fi
 
 # -------------- SETTINGS -------------------------------------------
 
@@ -142,10 +176,14 @@ fi
 
 # grab camera info and make sure it is an IR camera
 MODEL=`info | grep "NetCamSC" | cut -d'=' -f2`
-MODELNAME=`echo $MODEL | sed 's/NetCam/NetCam /g'`
+IR=`status | grep IR | tail -c 2`
 
-if [ "$MODEL" = "NetCamSC" ] ; then
+if [ "$MODEL" = "NetCamSC" ]; then
+	if [ "$IR" = "1" ]; then
 	MODELNAME="NetCam SC IR"
+	else
+	MODELNAME="NetCam SC"
+	fi
 else
 	MODELNAME="NetCam XL"
 fi
@@ -155,6 +193,7 @@ fi
 cat default_overlay0.conf	| sed "s/mycamera/$NEW_CAMERA_NAME/g" | sed "s/netcammodel/$MODELNAME/g" | sed "s/LOCAL/$LOCALTZ/g" > bak_overlay0.conf
 cat default_ftp.scr 		| sed "s/mycamera/$NEW_CAMERA_NAME/g" > ftp.scr
 cat default_IR_ftp.scr 		| sed "s/mycamera/$NEW_CAMERA_NAME/g" > IR_ftp.scr
+cat default_IP_ftp.scr 		| sed "s/mycamera/$NEW_CAMERA_NAME/g" > IP_ftp.scr
 
 # rewrite everything into new files, just to be sure
 cat default_video0.conf > video0.conf
@@ -201,25 +240,51 @@ fi
 # adjust overlay settings to reflect current time baseline (UTC)
 cat bak_overlay0.conf  | sed "s/TZONE/$TZONE/g" > overlay0.conf
 
-# check if the exposure grid is altered from factory default
-# if so retain this exposure grid but alter all other settings
-# this avoids resetting exposure grids on certain funky cameras
+# check if the parameter is altered from factory default
+# if so retain this parameter but alter all other settings
+# this avoids resetting parameters on certain funky cameras
 # which have been adjusted previously but might still benefit 
-# from an update (e.g. having the meta-data pushed etc).
-factory_grid="0x007e7e7e7e7e7e00"
-current_grid=`cat /dev/video/config0 | grep 'exposure_grid' | cut -d'=' -f2`
-phenocam_grid=`cat video.conf | grep 'exposure_grid' | cut -d'=' -f2`
+# from an update (e.g. having the meta-data pushed etc), while
+# keeping all else constant. This avoids jumps in colour in the
+# greenness time series. Data consistency prevails over cross site
+# consistency.
 
-if [ "$factory_grid" != "$current_grid" ];then
-	cat video.conf | sed -e s/"$phenocam_grid"/"$current_grid"/g > tmp.conf
+# grab the first default video config file name. This should all be the
+# same but the numbering might vary from system to system
+default_video_settings=`ls /etc/default/video0.conf* | awk -v p=1 'NR==p'`
+
+# which parameters should be evaluated and kept static if not 
+# the factory defaults
+parameters="exposure_grid blue red green" # haze saturation"
+
+# get the colour balance setting from the camera
+cbalance=`cat /dev/video/config0 | grep balance= | cut -d'=' -f2`
+
+# If the colour balance is set to auto, use phenocam defaults,
+# otherwise check and retain certain parameters.
+# only check for previous settings if the colour balance is set
+# to 0, if set to 1 we assume the camera is in factory mode or
+# needs adjusting to the PhenoCam default settings
+if [ "$cbalance" != "1" ]; then 
+for i in $parameters; do
 	
-	echo "# We retain the old exposure grid -- just updating all other settings!"
-	echo "# [do a factory reset if this an old camera but you prefer default settings]"
-	
-	# overwrite the PhenoCam default settings with those
-	# preserving the old exposure grid
-	mv tmp.conf video0.conf
+	# get factory, current and phenocam settings for the parameter
+	factory=`cat $default_video_settings | grep $i=`
+	current=`cat /dev/video/config0 | grep $i=`
+	phenocam=`cat video0.conf | grep $i=`
+
+	if [ "$factory" != "$current" ];then
+		cat video0.conf | sed -e s/"$phenocam"/"$current"/g > tmp.conf
+		echo "# We retain the old $i settings!"
+		# overwrite the PhenoCam default settings with those
+		# preserving the old exposure grid
+		mv tmp.conf video0.conf
+	fi
+done
+else
+echo "colour balance settings are the factory default, overwriting"
 fi
+echo "# [do a factory reset if this an old camera but you prefer default settings]"
 
 # dump video configuration to /dev/video/config0
 # device to adjust in memory settings
@@ -267,6 +332,7 @@ cat /etc/default/crontab > crontab
 
 # append the custom line
 echo "*/$CRONINT $CRONSTART-$CRONEND * * * admin sh /etc/config/phenocam_upload.sh" >> crontab
+echo "59 11 * * * admin sh /etc/config/phenocam_ip_table.sh" >> crontab
 
 # -------------- SAVE CONFIG / UPLOAD TEST IMATES -----------------------
 
@@ -285,6 +351,9 @@ config save
 echo "Uploading the first images as a test... (wait 2min)"
 sh phenocam_upload.sh
 
+echo "Uploading the ip table"
+sh phenocam_ip_table.sh
+
 echo ""
 echo "#--------------------------------------------------------------------"
 echo "#"
@@ -292,6 +361,5 @@ echo "# Done !!! - close the terminal if it remains open !"
 echo "#"
 echo "#--------------------------------------------------------------------"
 echo ""
-
 
 exit 0

@@ -44,7 +44,7 @@ fi
 # -------------- UPLOAD IMAGES --------------------------------------
 
 # grab camera info and make sure it is an IR camera
-MODEL=`info | grep "NetCamSC" | cut -d'=' -f2`
+IR=`status | grep IR | tail -c 2`
 
 # grab camera temperature from memory put it into
 # variable TEMP
@@ -66,7 +66,7 @@ cat IR_ftp.scr | sed "s/DATETIMESTRING/$DATETIMESTRING/g" > IR_ftp_tmp.scr
 
 # if it's a NetCamSC model make an additional IR picture
 # if not just take an RGB picture
-if [ "$MODEL" = "NetCamSC" ]; then
+if [ "$IR" = "1" ]; then
 
 	# just in case, set IR to 0
 	echo "ir_enable=0" > $CONFIG
