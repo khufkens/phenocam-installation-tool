@@ -18,11 +18,11 @@ The installation script runs within a terminal on all platforms. To open a termi
 
 On the command prompt of a terminal the scripts have the same syntax, in case of the windows script this would be:
 
-
 	PIT.bat IP USER PASSWORD CAMERA TIME_OFFSET TZ CRON_START CRON_END CRON_INT
 
-on Linux / Mac OSX this would read:
+You will need the telnet.exe program to be installed on your computer. As of Windows 7 this isn't installed by default anymore but can still be downloaded from the Microsoft website. Full instructions can be found [here](http://technet.microsoft.com/en-us/library/cc771275%28v=ws.10%29.aspx).
 
+on Linux / Mac OSX this would read:
 
 	sh PIT.sh IP USER PASSWORD CAMERA TIME_OFFSET TZ CRON_START CRON_END CRON_INT
 or
