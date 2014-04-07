@@ -16,13 +16,15 @@ Unzip the downloaded files or use the files cloned by git as is.
 
 The installation script runs within a terminal on all platforms. To open a terminal search for “Terminal” in OSX spotlight or “cmd” in the program search field (under the Start button) in Windows. For linux users I assume a familiarity with opening a terminal.
 
-On the command prompt of a terminal the scripts have the same syntax, in case of the windows script this would be:
+### Windows
+On the command prompt of a terminal the scripts have the same syntax, for Windows script this would be:
 
 	PIT.bat IP USER PASSWORD CAMERA TIME_OFFSET TZ CRON_START CRON_END CRON_INT
 
 You will need the telnet.exe program to be installed on your computer. As of Windows 7 this isn't installed by default anymore but can still be downloaded from the Microsoft website. Full instructions can be found [here](http://technet.microsoft.com/en-us/library/cc771275%28v=ws.10%29.aspx).
 
-on Linux / Mac OSX this would read:
+### Linux / OSX
+On Linux / Mac OSX systems this would read:
 
 	sh PIT.sh IP USER PASSWORD CAMERA TIME_OFFSET TZ CRON_START CRON_END CRON_INT
 or
