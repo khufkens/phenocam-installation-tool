@@ -99,6 +99,11 @@ PASSWD='anonymous'
 # before proceeding
 cd /etc/config
 
+# overwrite default nameserver (DNS) with universal google DNS server
+# if these settings are not correct subsequent calls to the server
+# might fail
+echo "nameserver 8.8.8.8" > resolv.conf
+
 # -------------- BACKUP OLD CONFIG ----------------------------------
 
 echo ""
@@ -175,7 +180,7 @@ fi
 # correct file names. It makes tracing errors more easy as well.
 
 # grab camera info and make sure it is an IR camera
-MODEL=`info | grep "NetCamSC" | cut -d'=' -f2`
+MODEL=`status | grep Product | cut -d'/' -f3 | cut -d'-' -f1`
 IR=`status | grep IR | tail -c 2`
 
 if [ "$MODEL" = "NetCamSC" ]; then
