@@ -1,0 +1,7 @@
+timeout 500
+open klima.sr.unh.edu
+user anonymous anonymous
+passive
+ascii
+put mycamera_ip.html data/mycamera/mycamera_ip.html
+quit
