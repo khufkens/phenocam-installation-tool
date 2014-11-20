@@ -24,7 +24,7 @@ echo OBJECT.SendKeys "%3%{ENTER}" >> sendCommands.vbs
 echo WScript.sleep 500 >> sendCommands.vbs
 echo OBJECT.SendKeys "cd /etc/config{ENTER}" >> sendCommands.vbs
 echo WScript.sleep 500 >> sendCommands.vbs
-echo OBJECT.SendKeys "wget https://bitbucket.org/khufkens/phenocam-installation-tool/raw/master/phenocam_default_install.tar.gz{ENTER}" >> sendCommands.vbs
+echo OBJECT.SendKeys "wget http://phenocam.sr.unh.edu/data/configs/phenocam_default_install.tar.gz{ENTER}" >> sendCommands.vbs
 echo WScript.sleep 1000 >> sendCommands.vbs
 echo OBJECT.SendKeys "gunzip phenocam_default_install.tar.gz{ENTER}" >> sendCommands.vbs
 echo WScript.sleep 500 >> sendCommands.vbs
