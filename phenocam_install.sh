@@ -164,8 +164,7 @@ if [ -f phenocam_default_install.tar* ]; then
 	rm phenocam_default_install.tar*
 fi
 
-# use the hardcoded bitbucket 'latest version'
-wget https://bitbucket.org/khufkens/phenocam-installation-tool/raw/master/phenocam_default_install.tar.gz
+wget $HOST/data/configs/phenocam_default_install.tar.gz
 
 gunzip phenocam_default_install.tar.gz
 tar -xvf phenocam_default_install.tar
