@@ -64,6 +64,14 @@ DATETIMESTRING=`date +"%Y_%m_%d_%H%M%S"`
 cat ftp.scr | sed "s/DATETIMESTRING/$DATETIMESTRING/g" > ftp_tmp.scr
 cat IR_ftp.scr | sed "s/DATETIMESTRING/$DATETIMESTRING/g" > IR_ftp_tmp.scr
 
+# The following few lines updates the time in the overlay
+# should time changes have occured it will show up in the
+# overlay!! -- this prevents this error
+
+# The following line dumps the current time in the correct format
+# to an overlay0_tmp.conf file
+cat bak_overlay0.conf  | sed "s/TZONE/$TZONE/g" | sed "s/%a %b %d %Y  %H:%M:%S/$DATE/g" | sed "s/\${IC}/$TEMP/g" > overlay0_tmp.conf
+
 # if it's a NetCamSC model make an additional IR picture
 # if not just take an RGB picture
 if [ "$IR" = "1" ]; then
@@ -72,17 +80,13 @@ if [ "$IR" = "1" ]; then
 	echo "ir_enable=0" > $CONFIG
 	sleep $DELAY # adjust exposure
 
-	# The following few lines updates the time in the overlay
-	# should time changes have occured it will show up in the
-	# overlay!!
-	# adjust overlay settings to reflect current time (UTC)
-	cat bak_overlay0.conf  | sed "s/TZONE/$TZONE/g" | sed "s/%a %b %d %Y  %H:%M:%S/$DATE/g" | sed "s/\${IC}/$TEMP/g" > overlay0_tmp.conf
-
 	# dump overlay configuration to /dev/video/config0
 	# device to adjust in memory settings
-	nrfiles=`awk 'END {print NR}' overlay0_tmp.conf`
+	# first grab the number of lines in the overlay0_tmp.conf
+	# file, then write line by line to the video device
+	nrlines=`awk 'END {print NR}' overlay0_tmp.conf`
 
-	for i in `seq 1 $nrfiles` ;
+	for i in `seq 1 $nrlines` ;
 	do
 	 awk -v p=$i 'NR==p' overlay0_tmp.conf > /dev/video/config0
 	done
@@ -96,9 +100,11 @@ if [ "$IR" = "1" ]; then
 
 	# dump overlay configuration to /dev/video/config0
 	# device to adjust in memory settings
-	nrfiles=`awk 'END {print NR}' overlay0_tmp.conf`
+	# first grab the number of lines in the overlay0_tmp.conf
+	# file, then write line by line to the video device
+	nrlines=`awk 'END {print NR}' overlay0_tmp.conf`
 
-	for i in `seq 1 $nrfiles` ;
+	for i in `seq 1 $nrlines` ;
 	do
 	 awk -v p=$i 'NR==p' overlay0_tmp.conf > /dev/video/config0
 	done
@@ -116,21 +122,15 @@ if [ "$IR" = "1" ]; then
 
 else
 
-	# The following few lines updates the time in the overlay
-	# should time changes have occured it will show up in the
-	# overlay!!
-	# adjust overlay settings to reflect current time (UTC)
-	cat bak_overlay0.conf  | sed "s/TZONE/$TZONE/g" | sed "s/%a %b %d %Y  %H:%M:%S/$DATE/g" | sed "s/\${IC}/$TEMP/g" > overlay0_tmp.conf
-
 	# just in case, set IR to 0
 	echo "ir_enable=0" > $CONFIG
 	sleep $DELAY # adjust exposure
 
 	# dump overlay configuration to /dev/video/config0
 	# device to adjust in memory settings
-	nrfiles=`awk 'END {print NR}' overlay0_tmp.conf`
+	nrlines=`awk 'END {print NR}' overlay0_tmp.conf`
 
-	for i in `seq 1 $nrfiles` ;
+	for i in `seq 1 $nrlines` ;
 	do
 	 awk -v p=$i 'NR==p' overlay0_tmp.conf > /dev/video/config0
 	done
