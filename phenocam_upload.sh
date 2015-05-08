@@ -70,7 +70,7 @@ cat IR_ftp.scr | sed "s/DATETIMESTRING/$DATETIMESTRING/g" > IR_ftp_tmp.scr
 
 # The following line dumps the current time in the correct format
 # to an overlay0_tmp.conf file
-cat bak_overlay0.conf  | sed "s/TZONE/$TZONE/g" | sed "s/%a %b %d %Y  %H:%M:%S/$DATE/g" | sed "s/\${IC}/$TEMP/g" > overlay0_tmp.conf
+cat default_overlay0.conf  | sed "s/TZONE/$TZONE/g" | sed "s/%a %b %d %Y  %H:%M:%S/$DATE/g" | sed "s/\${IC}/$TEMP/g" > overlay0_tmp.conf
 
 # if it's a NetCamSC model make an additional IR picture
 # if not just take an RGB picture
