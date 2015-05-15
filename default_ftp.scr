@@ -3,7 +3,7 @@ open klima.sr.unh.edu
 user anonymous anonymous
 passive
 ascii
-put /dev/video/config0 data/mycamera/mycamera_DATETIMESTRING.meta
+put /etc/config/RGG_config.txt data/mycamera/mycamera_DATETIMESTRING.meta
 binary
 put /dev/video/jpeg0 data/mycamera/mycamera_DATETIMESTRING.jpg
 quit

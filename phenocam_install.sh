@@ -337,7 +337,7 @@ cat /etc/default/crontab > crontab
 
 # append the custom line
 echo "*/$CRONINT $CRONSTART-$CRONEND * * * admin sh /etc/config/phenocam_upload.sh" >> crontab
-echo "59 11 * * * admin sh /etc/config/phenocam_ip_table.sh" >> crontab
+echo "30 12 * * * admin sh /etc/config/phenocam_ip_table.sh" >> crontab
 
 # -------------- SAVE CONFIG / UPLOAD TEST IMATES -----------------------
 
