@@ -82,9 +82,21 @@ cat current_overlay0.conf  | sed "s/TZONE/$TZONE/g" | sed "s/%a %b %d %Y  %H:%M:
 mac=`ifconfig | grep HWaddr | awk '{print $5}' | sed 's/://g'`
 mac_addr=`echo mac_addr=$mac `
 
-# grab ip address
+# grab internal ip address
 ip=`ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`
 ip_addr=`echo ip=$ip`
+
+# grab external ip address if there is an external connection
+# first test the connection to the google name server
+connection=`ping -q -W 1 -c 1 8.8.8.8 > /dev/null && echo ok || echo error`
+
+# If the connection is down, bail
+if [[ $connection != "ok" ]];then
+	echo "NA" > external_ip.txt
+else
+	wget -q http://ifconfig.me/ip -O external_ip.txt
+	ip_ext_addr=`cat external_ip.txt`
+fi
 
 # if it's a NetCamSC model make an additional IR picture
 # if not just take an RGB picture
@@ -99,6 +111,7 @@ if [ "$IR" = "1" ]; then
 
 	# colate everything
 	echo $ip_addr >> /etc/config/metadata.txt
+	echo $ip_ext_addr >> /etc/config/metadata.txt
 	echo $mac_addr >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
@@ -125,6 +138,7 @@ if [ "$IR" = "1" ]; then
 
 	# colate everything
 	echo $ip_addr >> /etc/config/metadata.txt
+	echo $ip_ext_addr >> /etc/config/metadata.txt
 	echo $mac_addr >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
@@ -161,6 +175,7 @@ else
 
 	# colate everything
 	echo $ip_addr >> /etc/config/metadata.txt
+	echo $ip_ext_addr >> /etc/config/metadata.txt
 	echo $mac_addr >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
@@ -194,5 +209,8 @@ rm overlay0_tmp.conf
 # Reset the configuration to 
 # the default RGB settings (just in case it's stuck at IR)
 echo "ir_enable=0" > $CONFIG
+
+# remove external ip address data
+
 
 exit
