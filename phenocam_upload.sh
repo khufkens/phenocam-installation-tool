@@ -11,28 +11,8 @@
 
 # -------------- SUBROUTINES -----------------------------------------
 
-# subroutine to extract the metadata during image acquisition
-metadata() 
-{
-
-	# Update the metadata file
-	# grab the MAC address
-	mac=`ifconfig | grep HWaddr | awk '{print $5}' | sed 's/://g'`
-	mac_addr=`echo mac_addr=$mac `
-
-	# grab ip address
-	ip=`ifconfig | awk '/inet addr/{print substr($2,6)}'`
-	ip_addr=`echo ip=$ip`
-
-	# grab metadata
-	cat /dev/video/config0 > /etc/config/metadata.txt
-
-	# colate everything
-	echo $ip_addr >> /etc/config/metadata.txt
-	echo $mac_addr >> /etc/config/metadata.txt
-
-}
-
+# seems like the bourne shell on the Stardots does NOT support 
+# subroutines!
 
 # -------------- SETTINGS -------------------------------------------
 
@@ -106,7 +86,20 @@ if [ "$IR" = "1" ]; then
 	sleep $DELAY # adjust exposure
 
 	# grab metadata using the metadata function
-	metadata
+	# grab the MAC address
+	mac=`ifconfig | grep HWaddr | awk '{print $5}' | sed 's/://g'`
+	mac_addr=`echo mac_addr=$mac `
+
+	# grab ip address
+	ip=`ifconfig | awk '/inet addr/{print substr($2,6)}'`
+	ip_addr=`echo ip=$ip`
+
+	# grab metadata
+	cat /dev/video/config0 > /etc/config/metadata.txt
+
+	# colate everything
+	echo $ip_addr >> /etc/config/metadata.txt
+	echo $mac_addr >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
 	# device to adjust in memory settings
@@ -128,7 +121,20 @@ if [ "$IR" = "1" ]; then
 	sleep $DELAY	# adjust exposure
 
 	# grab metadata using the metadata function
-	metadata
+	# grab the MAC address
+	mac=`ifconfig | grep HWaddr | awk '{print $5}' | sed 's/://g'`
+	mac_addr=`echo mac_addr=$mac `
+
+	# grab ip address
+	ip=`ifconfig | awk '/inet addr/{print substr($2,6)}'`
+	ip_addr=`echo ip=$ip`
+
+	# grab metadata
+	cat /dev/video/config0 > /etc/config/metadata.txt
+
+	# colate everything
+	echo $ip_addr >> /etc/config/metadata.txt
+	echo $mac_addr >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
 	# device to adjust in memory settings
@@ -160,7 +166,20 @@ else
 	sleep $DELAY # adjust exposure
 
 	# grab metadata using the metadata function
-	metadata
+	# grab the MAC address
+	mac=`ifconfig | grep HWaddr | awk '{print $5}' | sed 's/://g'`
+	mac_addr=`echo mac_addr=$mac `
+
+	# grab ip address
+	ip=`ifconfig | awk '/inet addr/{print substr($2,6)}'`
+	ip_addr=`echo ip=$ip`
+
+	# grab metadata
+	cat /dev/video/config0 > /etc/config/metadata.txt
+
+	# colate everything
+	echo $ip_addr >> /etc/config/metadata.txt
+	echo $mac_addr >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
 	# device to adjust in memory settings
