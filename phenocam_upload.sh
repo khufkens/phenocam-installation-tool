@@ -77,6 +77,15 @@ cat IR_ftp.scr | sed "s/DATETIMESTRING/$DATETIMESTRING/g" > IR_ftp_tmp.scr
 # to an overlay0_tmp.conf file
 cat current_overlay0.conf  | sed "s/TZONE/$TZONE/g" | sed "s/%a %b %d %Y  %H:%M:%S/$DATE/g" | sed "s/\${IC}/$TEMP/g" > overlay0_tmp.conf
 
+# grab metadata using the metadata function
+# grab the MAC address
+mac=`ifconfig | grep HWaddr | awk '{print $5}' | sed 's/://g'`
+mac_addr=`echo mac_addr=$mac `
+
+# grab ip address
+ip=`ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`
+ip_addr=`echo ip=$ip`
+
 # if it's a NetCamSC model make an additional IR picture
 # if not just take an RGB picture
 if [ "$IR" = "1" ]; then
@@ -84,15 +93,6 @@ if [ "$IR" = "1" ]; then
 	# just in case, set IR to 0
 	echo "ir_enable=0" > $CONFIG
 	sleep $DELAY # adjust exposure
-
-	# grab metadata using the metadata function
-	# grab the MAC address
-	mac=`ifconfig | grep HWaddr | awk '{print $5}' | sed 's/://g'`
-	mac_addr=`echo mac_addr=$mac `
-
-	# grab ip address
-	ip=`ifconfig | awk '/inet addr/{print substr($2,6)}'`
-	ip_addr=`echo ip=$ip`
 
 	# grab metadata
 	cat /dev/video/config0 > /etc/config/metadata.txt
@@ -119,15 +119,6 @@ if [ "$IR" = "1" ]; then
 	# change the settings to enable IR image acquisition
 	echo "ir_enable=1" > $CONFIG
 	sleep $DELAY	# adjust exposure
-
-	# grab metadata using the metadata function
-	# grab the MAC address
-	mac=`ifconfig | grep HWaddr | awk '{print $5}' | sed 's/://g'`
-	mac_addr=`echo mac_addr=$mac `
-
-	# grab ip address
-	ip=`ifconfig | awk '/inet addr/{print substr($2,6)}'`
-	ip_addr=`echo ip=$ip`
 
 	# grab metadata
 	cat /dev/video/config0 > /etc/config/metadata.txt
@@ -164,15 +155,6 @@ else
 	# just in case, set IR to 0
 	echo "ir_enable=0" > $CONFIG
 	sleep $DELAY # adjust exposure
-
-	# grab metadata using the metadata function
-	# grab the MAC address
-	mac=`ifconfig | grep HWaddr | awk '{print $5}' | sed 's/://g'`
-	mac_addr=`echo mac_addr=$mac `
-
-	# grab ip address
-	ip=`ifconfig | awk '/inet addr/{print substr($2,6)}'`
-	ip_addr=`echo ip=$ip`
 
 	# grab metadata
 	cat /dev/video/config0 > /etc/config/metadata.txt
