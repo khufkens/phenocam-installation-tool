@@ -9,6 +9,30 @@
 # Koen Hufkens (Januari 2014) koen.hufkens@gmail.com
 #--------------------------------------------------------------------
 
+# -------------- SUBROUTINES -----------------------------------------
+
+# subroutine to extract the metadata during image acquisition
+metadata (){
+
+	# Update the metadata file
+	# grab the MAC address
+	mac=`ifconfig | grep HWaddr | awk '{print $5}' | sed 's/://g'`
+	mac_addr=`echo mac_addr=$mac `
+
+	# grab ip address
+	ip=`ifconfig | awk '/inet addr/{print substr($2,6)}'`
+	ip_addr=`echo ip=$ip`
+
+	# grab metadata
+	cat /dev/video/config0 > /etc/config/metadata.txt
+
+	# colate everything
+	echo $ip_addr >> /etc/config/metadata.txt
+	echo $mac_addr >> /etc/config/metadata.txt
+
+}
+
+
 # -------------- SETTINGS -------------------------------------------
 
 # make sure we are in the right directory
@@ -80,6 +104,9 @@ if [ "$IR" = "1" ]; then
 	echo "ir_enable=0" > $CONFIG
 	sleep $DELAY # adjust exposure
 
+	# grab metadata using the metadata function
+	metadata
+
 	# dump overlay configuration to /dev/video/config0
 	# device to adjust in memory settings
 	# first grab the number of lines in the overlay0_tmp.conf
@@ -93,10 +120,14 @@ if [ "$IR" = "1" ]; then
 
 	# run the upload script With RGB enabled (default)
 	ftpscript ftp_tmp.scr >> $LOG
+	rm /etc/config/metadata.txt
 
 	# change the settings to enable IR image acquisition
 	echo "ir_enable=1" > $CONFIG
 	sleep $DELAY	# adjust exposure
+
+	# grab metadata using the metadata function
+	metadata
 
 	# dump overlay configuration to /dev/video/config0
 	# device to adjust in memory settings
@@ -111,6 +142,7 @@ if [ "$IR" = "1" ]; then
 
 	# run the upload script With IR enabled
 	ftpscript IR_ftp_tmp.scr >> $LOG
+	rm /etc/config/metadata.txt
 
 	# Reset the configuration to 
 	# the default RGB settings
@@ -126,6 +158,9 @@ else
 	echo "ir_enable=0" > $CONFIG
 	sleep $DELAY # adjust exposure
 
+	# grab metadata using the metadata function
+	metadata
+
 	# dump overlay configuration to /dev/video/config0
 	# device to adjust in memory settings
 	nrlines=`awk 'END {print NR}' overlay0_tmp.conf`
@@ -137,6 +172,7 @@ else
 
 	# run the upload script With RGB enabled (default)
 	ftpscript ftp_tmp.scr >> $LOG
+	rm /etc/config/metadata.txt
 
 	# clean up temporary files
 	rm ftp_tmp.scr
