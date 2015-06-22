@@ -12,7 +12,8 @@
 # -------------- SUBROUTINES -----------------------------------------
 
 # subroutine to extract the metadata during image acquisition
-metadata (){
+metadata() 
+{
 
 	# Update the metadata file
 	# grab the MAC address
