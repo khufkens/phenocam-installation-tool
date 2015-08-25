@@ -80,22 +80,22 @@ cat current_overlay0.conf  | sed "s/TZONE/$TZONE/g" | sed "s/%a %b %d %Y  %H:%M:
 # grab metadata using the metadata function
 # grab the MAC address
 mac=`ifconfig | grep HWaddr | awk '{print $5}' | sed 's/://g'`
-mac_addr=`echo mac_addr=$mac `
 
 # grab internal ip address
 ip=`ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`
-ip_addr=`echo ip=$ip`
 
 # grab external ip address if there is an external connection
 # first test the connection to the google name server
-connection=`ping -q -W 1 -c 1 8.8.8.8 > /dev/null && echo ok || echo error`
+connection=`ping -q -c 1 8.8.8.8 > /dev/null && echo ok || echo error`
 
 # If the connection is down, bail
-if [[ $connection != "ok" ]];then
+if [ "$connection" != "ok" ];then
 	echo "NA" > external_ip.txt
 else
+	echo "we have a connection! getting external ip"
 	wget -q http://ifconfig.me/ip -O external_ip.txt
 	ip_ext_addr=`cat external_ip.txt`
+	echo "external ip is: $ip_ext_addr"
 fi
 
 # if it's a NetCamSC model make an additional IR picture
@@ -110,9 +110,9 @@ if [ "$IR" = "1" ]; then
 	cat /dev/video/config0 > /etc/config/metadata.txt
 
 	# colate everything
-	echo $ip_addr >> /etc/config/metadata.txt
-	echo $ip_ext_addr >> /etc/config/metadata.txt
-	echo $mac_addr >> /etc/config/metadata.txt
+	echo "ip_addr=$ip" >> /etc/config/metadata.txt
+	echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
+	echo "mac_addr=$mac" >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
 	# device to adjust in memory settings
@@ -137,9 +137,9 @@ if [ "$IR" = "1" ]; then
 	cat /dev/video/config0 > /etc/config/metadata.txt
 
 	# colate everything
-	echo $ip_addr >> /etc/config/metadata.txt
-	echo $ip_ext_addr >> /etc/config/metadata.txt
-	echo $mac_addr >> /etc/config/metadata.txt
+	echo "ip_addr=$ip" >> /etc/config/metadata.txt
+	echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
+	echo "mac_addr=$mac" >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
 	# device to adjust in memory settings
@@ -174,9 +174,9 @@ else
 	cat /dev/video/config0 > /etc/config/metadata.txt
 
 	# colate everything
-	echo $ip_addr >> /etc/config/metadata.txt
-	echo $ip_ext_addr >> /etc/config/metadata.txt
-	echo $mac_addr >> /etc/config/metadata.txt
+	echo "ip_addr=$ip" >> /etc/config/metadata.txt
+	echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
+	echo "mac_addr=$mac" >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
 	# device to adjust in memory settings

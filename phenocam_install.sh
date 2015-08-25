@@ -139,7 +139,7 @@ ftp -n << EOF
 EOF
 
 # delete uploaded tar archive
-rm $NEW_CAMERA_NAME\_backup_settings\_$TODAY.tar.gz
+rm $NEW_CAMERA_NAME\_backup_settings\_$TODAY.*
 
 # -------------- DOWNLOAD CONFIG FILES ------------------------------
 
