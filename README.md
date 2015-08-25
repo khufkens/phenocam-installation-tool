@@ -20,6 +20,8 @@ Unzip the downloaded files or use the files cloned by git as is.
 
 The installation script runs within a terminal on all platforms. To open a terminal search for “Terminal” in OSX spotlight or “cmd” in the program search field (under the Start button) in Windows. For linux users I assume a familiarity with opening a terminal.
 
+The installation **requires** you to have a working internet connection on the camera! Connect to the camera when it is hooked up to either an open network or a router / hub. If you do not have an internet connection on the camera the PIT tool will **not** work.
+
 ### Windows
 On the command prompt of a terminal the scripts have the same syntax, for Windows script this would be:
 
