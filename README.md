@@ -10,9 +10,9 @@ Custom changes can be made to the code to suite your own needs. However, remembe
 
 clone the project to your home computer using the following command (with git installed)
 
-	git clone https://khufkens@bitbucket.org/khufkens/phenocam-installation-tool.git
+	git clone https://github.com/khufkens/phenocam-installation-tool.git
 
-alternatively, download the project using [this link](https://bitbucket.org/khufkens/phenocam-installation-tool/get/master.zip).
+alternatively, download the project using download button.
 
 Unzip the downloaded files or use the files cloned by git as is.
 
