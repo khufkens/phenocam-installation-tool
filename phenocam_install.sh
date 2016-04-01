@@ -89,6 +89,19 @@ else
     CRONINT="30"
 fi
 
+# set the ftp mode to "active"
+# meaning (don't set it to passive)
+if [ -n "$7" ]; then
+    if [ "$7" == "active"]; then	
+	FTPMODE=""
+    else
+	FTPMODE="passive"
+    fi
+else
+    # there is no active mode command, leave blank
+    FTPMODE="passive"
+fi
+
 # upload / download server - location from which to grab and
 # and where to put config files
 HOST='klima.sr.unh.edu'
@@ -183,22 +196,35 @@ fi
 MODEL=`status | grep Product | cut -d'/' -f3 | cut -d'-' -f1`
 IR=`status | grep IR | sed -e 's#.*IR:\(\)#\1#' | cut -d' ' -f1`
 
+# new 3 / 5 MP models with or without IR
 if [ "$MODEL" = "NetCamSC" ]; then
 	if [ "$IR" = "1" ]; then
 	MODELNAME="NetCam SC IR"
 	else
 	MODELNAME="NetCam SC"
 	fi
-else
+fi
+
+# HD 10 MP models with or without IR
+if [ "$MODEL" = "NetCamSCX" ]; then
+	if [ "$IR" = "1" ]; then
+	MODELNAME="NetCam SCX IR"
+	else
+	MODELNAME="NetCam SCX"
+	fi
+fi
+
+# legacy X model (rare)
+if [ "$MODEL" = "NetCamXL" ]; then
 	MODELNAME="NetCam XL"
 fi
 
 # set proper camera names in all config files
 # and upload scripts
 cat default_overlay0.conf	| sed "s/mycamera/$NEW_CAMERA_NAME/g" | sed "s/netcammodel/$MODELNAME/g" | sed "s/LOCAL/$LOCALTZ/g" > current_overlay0.conf
-cat default_ftp.scr 		| sed "s/mycamera/$NEW_CAMERA_NAME/g" > ftp.scr
-cat default_IR_ftp.scr 		| sed "s/mycamera/$NEW_CAMERA_NAME/g" > IR_ftp.scr
-cat default_IP_ftp.scr 		| sed "s/mycamera/$NEW_CAMERA_NAME/g" > IP_ftp.scr
+cat default_ftp.scr 		| sed "s/mycamera/$NEW_CAMERA_NAME/g" | sed "s/FTPMODE/$FTPMODE/g" > ftp.scr
+cat default_IR_ftp.scr 		| sed "s/mycamera/$NEW_CAMERA_NAME/g" | sed "s/FTPMODE/$FTPMODE/g" > IR_ftp.scr
+cat default_IP_ftp.scr 		| sed "s/mycamera/$NEW_CAMERA_NAME/g" | sed "s/FTPMODE/$FTPMODE/g" > IP_ftp.scr
 
 # rewrite everything into new files, just to be sure
 cat default_video0.conf > video0.conf

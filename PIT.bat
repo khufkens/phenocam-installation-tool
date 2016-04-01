@@ -32,7 +32,7 @@ echo OBJECT.SendKeys "tar -xvf phenocam_default_install.tar{ENTER}" >> sendComma
 echo WScript.sleep 500 >> sendCommands.vbs
 echo OBJECT.SendKeys "rm phenocam_default_install.tar{ENTER}" >> sendCommands.vbs
 echo WScript.sleep 500 >> sendCommands.vbs
-echo OBJECT.SendKeys "sh phenocam_install.sh %4 %timezone% %6 %7 %8 %9{ENTER}" >> sendCommands.vbs
+echo OBJECT.SendKeys "sh phenocam_install.sh %4 %timezone% %6 %7 %8 %9 %10{ENTER}" >> sendCommands.vbs
 echo WScript.sleep 180000 >> sendCommands.vbs
 echo OBJECT.SendKeys "exit{ENTER}" >> sendCommands.vbs
 echo WScript.sleep 50 >> sendCommands.vbs
