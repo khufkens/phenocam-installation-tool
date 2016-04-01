@@ -32,10 +32,10 @@ You will need the telnet.exe program to be installed on your computer. As of Win
 ### Linux / OSX
 On Linux / Mac OSX systems this would read:
 
-	sh PIT.sh IP USER PASSWORD CAMERA TIME_OFFSET TZ CRON_START CRON_END CRON_INT
+	sh PIT.sh IP USER PASSWORD CAMERA TIME_OFFSET TZ CRON_START CRON_END CRON_INT FTP_MODE
 or
 
-	./PIT.sh IP USER PASSWORD CAMERA TIME_OFFSET TZ CRON_START CRON_END CRON_INT
+	./PIT.sh IP USER PASSWORD CAMERA TIME_OFFSET TZ CRON_START CRON_END CRON_INT FTP_MODE
 
 with:
 
@@ -50,11 +50,18 @@ TZ            | a text string corresponding to the local time zone (e.g. EST)
 CRON_START    | start of the scheduled image acquisitions (e.g. 4 in the morning)
 CRON_END      | end of the scheduled image acquisitions (e.g. ten at night, so 22 in 24-h notation)
 CRON_INT      | interval at which to take pictures (e.g. 15, every 15 minutes - default phenocam setting is 30)
-[all parameters are required!]
+FTP_MODE      | active or passive (can be empty, default = PASSIVE)
+[all parameters but the FTP_MODE are required!]
 
 An example of our in lab test camera configuration:
 
 	./PIT.sh 140.247.89.xx admin admin testcam3 -5 EST 4 22 30
+	
+or
+	
+	./PIT.sh 140.247.89.xx admin admin testcam3 -5 EST 4 22 30 active
+	
+for an active FTP connection (necessary for some cameras)
 
 This configures the camera 'testcam3', located in the EST time zone (UTC -5) to take images every half hour between 4 and 22h.
 
