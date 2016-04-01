@@ -25,7 +25,7 @@ The installation **requires** you to have a working internet connection on the c
 ### Windows
 On the command prompt of a terminal the scripts have the same syntax, for Windows script this would be:
 
-	PIT.bat IP USER PASSWORD CAMERA TIME_OFFSET TZ CRON_START CRON_END CRON_INT
+	PIT.bat IP USER PASSWORD CAMERA TIME_OFFSET TZ CRON_START CRON_END CRON_INT FTP_MODE
 
 You will need the telnet.exe program to be installed on your computer. As of Windows 7 this isn't installed by default anymore but can still be downloaded from the Microsoft website. Full instructions can be found [here](http://technet.microsoft.com/en-us/library/cc771275%28v=ws.10%29.aspx).
 
