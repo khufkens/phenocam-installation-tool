@@ -36,7 +36,7 @@ echo "tar -xvf phenocam_default_install.tar"
 sleep 1
 echo "rm phenocam_default_install.tar"
 sleep 1
-echo "sh phenocam_install.sh $4 $5 $6 $7 $8 $9 $10"
+echo "sh phenocam_install.sh $4 $5 $6 $7 $8 $9 ${10}"
 sleep 180 ) | telnet 2> /dev/null
 
 exit 0

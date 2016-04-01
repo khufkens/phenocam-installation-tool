@@ -15,7 +15,7 @@
 
 # -------------- BASIC ERROR TRAPS-----------------------------------
 
-if [ "$#" = "1" ]; then
+if [ "$#" -eq "1" ]; then
 	if [ "$1" = "reset" ]; then
 		# reset video settings to factory default
 		default_video=`ls /etc/default/video0.conf* | awk -v p=1 'NR==p'`
@@ -42,7 +42,7 @@ if [ "$#" = "1" ]; then
 	fi
 fi
 
-if [ "$#" != "6" ]; then
+if [ "$#" -ne "7" ]; then
 	echo "Not enough parameters, please check your inputs!"
 	exit 0
 fi
@@ -91,15 +91,10 @@ fi
 
 # set the ftp mode to "active"
 # meaning (don't set it to passive)
-if [ -n "$7" ]; then
-    if [ "$7" == "active"]; then	
+if [ "$7" = "active" ]; then
 	FTPMODE=""
-    else
+   else
 	FTPMODE="passive"
-    fi
-else
-    # there is no active mode command, leave blank
-    FTPMODE="passive"
 fi
 
 # upload / download server - location from which to grab and
