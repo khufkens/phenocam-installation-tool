@@ -15,17 +15,16 @@ set timezone=%5%
 set timezone=%timezone:+={+}%
 
 :: asign variable names
-ip=%1
-login=%2
-passwd=%3
-name=%4
-TZ=%6
-cronstart=%7
-cronend=%8
-timestep=%9
-shift 9
-ftpmode=%1
-
+set ip=%1%
+set login=%2%
+set passwd=%3%
+set name=%4%
+set TZ=%6%
+set cronstart=%7%
+set cronend=%8%
+set timestep=%9%
+shift
+set ftpmode=%9%
 
 :: Create VBS script
 echo set OBJECT=WScript.CreateObject("WScript.Shell") > sendCommands.vbs
