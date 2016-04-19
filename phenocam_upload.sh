@@ -79,10 +79,10 @@ cat current_overlay0.conf  | sed "s/TZONE/$TZONE/g" | sed "s/%a %b %d %Y  %H:%M:
 
 # grab metadata using the metadata function
 # grab the MAC address
-mac=`ifconfig | grep HWaddr | awk '{print $5}' | sed 's/://g'`
+mac_addr=`ifconfig | grep HWaddr | awk '{print $5}' | sed 's/://g'`
 
 # grab internal ip address
-ip=`ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`
+ip_addr=`ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`
 
 # grab external ip address if there is an external connection
 # first test the connection to the google name server
@@ -102,6 +102,9 @@ connection=`ping -q -c 1 8.8.8.8 > /dev/null && echo ok || echo error`
 # if not just take an RGB picture
 if [ "$IR" = "1" ]; then
 
+	# some feedback
+	echo "Uploading RGB Image"
+
 	# just in case, set IR to 0
 	echo "ir_enable=0" > $CONFIG
 	sleep $DELAY # adjust exposure
@@ -111,7 +114,7 @@ if [ "$IR" = "1" ]; then
 
 	# colate everything
 	echo "ip_addr=$ip" >> /etc/config/metadata.txt
-	echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
+	#echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
 	echo "mac_addr=$mac" >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
@@ -128,6 +131,9 @@ if [ "$IR" = "1" ]; then
 	# run the upload script With RGB enabled (default)
 	ftpscript ftp_tmp.scr >> $LOG
 	rm /etc/config/metadata.txt
+
+	# some feedback
+	echo "Uploading IR Image"
 
 	# change the settings to enable IR image acquisition
 	echo "ir_enable=1" > $CONFIG
@@ -166,6 +172,9 @@ if [ "$IR" = "1" ]; then
 
 else
 
+	# some feedback
+	echo "Uploading RGB Image"
+
 	# just in case, set IR to 0
 	echo "ir_enable=0" > $CONFIG
 	sleep $DELAY # adjust exposure
@@ -175,7 +184,7 @@ else
 
 	# colate everything
 	echo "ip_addr=$ip" >> /etc/config/metadata.txt
-	echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
+	#echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
 	echo "mac_addr=$mac" >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0

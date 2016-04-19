@@ -20,7 +20,7 @@ if [ "$#" -eq "1" ]; then
 		# reset video settings to factory default
 		default_video=`ls /etc/default/video0.conf* | awk -v p=1 'NR==p'`
 		echo "reset video default parameters"
-	
+
 		# dump video configuration to /dev/video/config0
 		# device to adjust in memory settings
 		nrfiles=`cat $default_video | awk 'END {print NR}'`
@@ -29,12 +29,12 @@ if [ "$#" -eq "1" ]; then
 		do
 				cat $default_video | awk -v p=$i 'NR==p' > /dev/video/config0
 		done
-		
+
 		# copy to config folder / otherwise they won't show up on the
 		# webpage, save to flash to keep after reboot
 		cp $default_video /etc/config/video0.conf
 		config save
-		
+
 		exit 0
 	else
 		echo "Wrong parameter, use reset to reset the video settings!"
@@ -42,10 +42,17 @@ if [ "$#" -eq "1" ]; then
 	fi
 fi
 
-if [ "$#" -ne "7" ]; then
+if [ "$#" -ne "2" ]; then
 	echo "Not enough parameters, please check your inputs!"
 	exit 0
 fi
+
+# feedback on default settings
+if [ "$#" -eq "2" ]; then
+	echo "Only a name and time zone are provided."
+	echo "All other settings will be set to default settings."
+fi
+
 
 # -------------- SETTINGS -------------------------------------------
 
@@ -91,10 +98,14 @@ fi
 
 # set the ftp mode to "active"
 # meaning (don't set it to passive)
-if [ "$7" = "active" ]; then
+if [ - n "$7"]; then
 	FTPMODE=""
-   else
-	FTPMODE="passive"
+else
+	if [ "$7" = "active" ]; then
+		FTPMODE=""
+	   else
+		FTPMODE="passive"
+	fi
 fi
 
 # upload / download server - location from which to grab and
@@ -172,6 +183,7 @@ if [ -f phenocam_default_install.tar* ]; then
 	rm phenocam_default_install.tar*
 fi
 
+# download the installation files from the PhenoCam servers
 wget $HOST/data/configs/phenocam_default_install.tar.gz
 
 gunzip phenocam_default_install.tar.gz
@@ -269,7 +281,7 @@ cat current_overlay0.conf  | sed "s/TZONE/$TZONE/g" > overlay0.conf
 # check if the parameter is altered from factory default
 # if so retain this parameter but alter all other settings
 # this avoids resetting parameters on certain funky cameras
-# which have been adjusted previously but might still benefit 
+# which have been adjusted previously but might still benefit
 # from an update (e.g. having the meta-data pushed etc), while
 # keeping all else constant. This avoids jumps in colour in the
 # greenness time series. Data consistency prevails over cross site
@@ -279,7 +291,7 @@ cat current_overlay0.conf  | sed "s/TZONE/$TZONE/g" > overlay0.conf
 # same but the numbering might vary from system to system
 default_video_settings=`ls /etc/default/video0.conf* | awk -v p=1 'NR==p'`
 
-# which parameters should be evaluated and kept static if not 
+# which parameters should be evaluated and kept static if not
 # the factory defaults
 parameters="exposure_grid blue red green" # haze saturation"
 
@@ -291,9 +303,9 @@ cbalance=`cat /dev/video/config0 | grep balance= | cut -d'=' -f2`
 # only check for previous settings if the colour balance is set
 # to 0, if set to 1 we assume the camera is in factory mode or
 # needs adjusting to the PhenoCam default settings
-if [ "$cbalance" != "1" ]; then 
+if [ "$cbalance" != "1" ]; then
 for i in $parameters; do
-	
+
 	# get factory, current and phenocam settings for the parameter
 	factory=`cat $default_video_settings | grep $i=`
 	current=`cat /dev/video/config0 | grep $i=`
