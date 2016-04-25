@@ -50,8 +50,8 @@ TZ            | a text string corresponding to the local time zone (e.g. EST)
 CRON_START    | start of the scheduled image acquisitions (e.g. 4 in the morning)
 CRON_END      | end of the scheduled image acquisitions (e.g. ten at night, so 22 in 24-h notation)
 CRON_INT      | interval at which to take pictures (e.g. 15, every 15 minutes - default phenocam setting is 30)
-FTP_MODE      | active or passive (can be empty, default = PASSIVE)
-[all parameters but the FTP_MODE are required!]
+FTP_MODE      | active or passive (default = passive)
+[all parameters are required!]
 
 An example of our in lab test camera configuration:
 
