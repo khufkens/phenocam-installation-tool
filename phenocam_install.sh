@@ -10,7 +10,7 @@
 # will pull all installation files from a server and adjust the
 # settings on the NetCam accordingly.
 #
-# Koen Hufkens (January 2014) koen.hufkens@gmail.com
+# Koen Hufkens (May 2016) koen.hufkens@gmail.com
 #--------------------------------------------------------------------
 
 # -------------- BASIC ERROR TRAPS-----------------------------------
@@ -40,11 +40,6 @@ if [ "$#" -eq "1" ]; then
 		echo "Wrong parameter, use reset to reset the video settings!"
 		exit 0
 	fi
-fi
-
-if [ "$#" -ne "2" ]; then
-	echo "Not enough parameters, please check your inputs!"
-	exit 0
 fi
 
 # feedback on default settings
@@ -98,7 +93,7 @@ fi
 
 # set the ftp mode to "active"
 # meaning (don't set it to passive)
-if [ - n "$7"]; then
+if [ -n "$7" ]; then
 	FTPMODE=""
 else
 	if [ "$7" = "active" ]; then
