@@ -345,7 +345,29 @@ done
 # which governs NTP settings
 rc.ntpdate
 
-# -------------- SET SCHEDULED UPLOADS -------------------------------
+# -------------- UPLOAD TEST IMATES ---------------------------
+
+echo ""
+echo "#--------------------------------------------------------------------"
+echo "#"
+echo "# Uploading test images !"
+echo "#"
+echo "#--------------------------------------------------------------------"
+echo ""
+
+# grab the default settings and overwrite the current one
+# this disables upload process from starting while doing
+# the test uploads
+cat /etc/default/crontab > crontab
+
+# uploading first images, testing the upload procedure
+echo "Uploading the first images as a test... (wait 2min)"
+sh phenocam_upload.sh
+
+echo "Uploading the ip table"
+sh phenocam_ip_table.sh
+
+# -------------- SET SCHEDULED UPLOADS / SAVE CONFIG ---------------
 
 # set the cron job
 # this job calls the phenocam_upload.sh script and
@@ -360,32 +382,17 @@ echo "#"
 echo "#--------------------------------------------------------------------"
 echo ""
 
-# grap the default settings
-cat /etc/default/crontab > crontab
-
-# append the custom line
+# append the custom lines to the default crontab
+# as loaded in the previous section
 echo "*/$CRONINT $CRONSTART-$CRONEND * * * admin sh /etc/config/phenocam_upload.sh" >> crontab
 echo "30 12 * * * admin sh /etc/config/phenocam_ip_table.sh" >> crontab
 
-# -------------- SAVE CONFIG / UPLOAD TEST IMATES -----------------------
-
-echo ""
-echo "#--------------------------------------------------------------------"
-echo "#"
-echo "# Saving config files to flash memory / uploading test images !"
-echo "#"
-echo "#--------------------------------------------------------------------"
-echo ""
-
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # !!!! MOST IMPORTANT, SAVE CONFIG TO FLASH !!!!
 config save
 
-# uploading first images, testing the upload procedure
-echo "Uploading the first images as a test... (wait 2min)"
-sh phenocam_upload.sh
-
-echo "Uploading the ip table"
-sh phenocam_ip_table.sh
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 echo ""
 echo "#--------------------------------------------------------------------"
