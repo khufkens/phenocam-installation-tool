@@ -55,11 +55,11 @@ FTP_MODE      | active or passive (default = passive)
 
 An example of our in lab test camera configuration:
 
-	./PIT.sh 140.247.89.xx admin admin testcam3 -5 EST 4 22 30
+	./PIT.sh 140.247.89.xx admin admin testcam3 -5 EST 4 22 30 passive
 	
 or
 	
-	./PIT.sh 140.247.89.xx admin admin testcam3 -5 EST 4 22 30 active
+	./PIT.sh 140.247.89.xx admin admin testcam3 -5 EST 4 22 30 passive
 	
 for an active FTP connection (necessary for some cameras)
 
