@@ -109,6 +109,9 @@ HOST='klima.sr.unh.edu'
 USER='anonymous'
 PASSWD='anonymous'
 
+# create default server list
+echo $HOST > server.txt
+
 # make sure we are in the config directory
 # before proceeding
 cd /etc/config
@@ -382,9 +385,34 @@ echo "#"
 echo "#--------------------------------------------------------------------"
 echo ""
 
+# generate random number between 0 and the interval value
+rnumber=`awk -v min=0 -v max=$CRONINT 'BEGIN{srand(); print int(min+rand()*(max-min+1))}'`
+
+# divide 60 min by the interval
+div=`echo "59 $CRONINT /" | dc`
+
+int=`echo $div | cut -d'.' -f1`
+rem=`echo $div | cut -d'.' -f2`
+
+for i in `seq 0 $int`;do
+
+	product=`echo "$CRONINT $i *" | dc`
+	sum=`echo "$product $rnumber +" | dc`
+
+	if [ "$i" = "0" ];then 
+		interval=`echo $sum`
+	else
+		if [ "$sum" -le "59" ];then
+		interval=`echo ${interval},${sum}`
+		fi
+	fi
+done
+
+echo "crontab intervals set to: $interval"
+
 # append the custom lines to the default crontab
 # as loaded in the previous section
-echo "*/$CRONINT $CRONSTART-$CRONEND * * * admin sh /etc/config/phenocam_upload.sh" >> crontab
+echo "$interval $CRONSTART-$CRONEND * * * admin sh /etc/config/phenocam_upload.sh" >> crontab
 echo "30 12 * * * admin sh /etc/config/phenocam_ip_table.sh" >> crontab
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

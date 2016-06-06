@@ -1,5 +1,5 @@
-timeout 500
-open klima.sr.unh.edu
+timeout 200
+open SERVER
 user anonymous anonymous
 FTPMODE
 ascii

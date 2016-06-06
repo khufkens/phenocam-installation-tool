@@ -46,6 +46,9 @@ else
 LOG="/dev/null"
 fi
 
+# how many servers do we upload to
+nrservers=`awk 'END {print NR}' server.txt`
+	
 # -------------- UPLOAD IMAGES --------------------------------------
 
 # grab camera info and make sure it is an IR camera
@@ -66,7 +69,6 @@ DATETIMESTRING=`date +"%Y_%m_%d_%H%M%S"`
 
 # substitute the values in the ftp.scr and IR_ftp.scr
 # upload scripts
-cat ftp.scr | sed "s/DATETIMESTRING/$DATETIMESTRING/g" > ftp_tmp.scr
 cat IR_ftp.scr | sed "s/DATETIMESTRING/$DATETIMESTRING/g" > IR_ftp_tmp.scr
 
 # The following few lines updates the time in the overlay
@@ -87,16 +89,6 @@ ip_addr=`ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`
 # grab external ip address if there is an external connection
 # first test the connection to the google name server
 connection=`ping -q -c 1 8.8.8.8 > /dev/null && echo ok || echo error`
-
-# If the connection is down, bail
-#if [ "$connection" != "ok" ];then
-#	echo "NA" > external_ip.txt
-#else
-#	echo "we have a connection! getting external ip"
-#	wget -q http://ifconfig.me/ip -O external_ip.txt
-#	ip_ext_addr=`cat external_ip.txt`
-#	echo "external ip is: $ip_ext_addr"
-#fi
 
 # if it's a NetCamSC model make an additional IR picture
 # if not just take an RGB picture
@@ -129,7 +121,16 @@ if [ "$IR" = "1" ]; then
 	done
 
 	# run the upload script With RGB enabled (default)
-	ftpscript ftp_tmp.scr >> $LOG
+	# dump overlay configuration to /dev/video/config0
+	# device to adjust in memory settings
+
+	for i in `seq 1 $nrservers` ;
+	do
+		SERVER=`awk -v p=$i 'NR==p' server.txt` 
+		cat ftp.scr | sed "s/DATETIMESTRING/$DATETIMESTRING/g" | sed "s/SERVER/$SERVER/g" > ftp_tmp.scr
+ 		ftpscript ftp_tmp.scr >> $LOG
+	done
+	
 	rm /etc/config/metadata.txt
 
 	# some feedback
@@ -158,15 +159,20 @@ if [ "$IR" = "1" ]; then
 	 awk -v p=$i 'NR==p' overlay0_tmp.conf > /dev/video/config0
 	done
 
-	# run the upload script With IR enabled
-	ftpscript IR_ftp_tmp.scr >> $LOG
-	rm /etc/config/metadata.txt
-
+	# run the upload script With IR enabled for all servers
+	for i in `seq 1 $nrservers` ;
+	do
+		SERVER=`awk -v p=$i 'NR==p' server.txt` 
+		cat IR_ftp.scr | sed "s/DATETIMESTRING/$DATETIMESTRING/g" | sed "s/SERVER/$SERVER/g" > IR_ftp_tmp.scr
+ 		ftpscript IR_ftp_tmp.scr >> $LOG
+	done
+	
 	# Reset the configuration to 
 	# the default RGB settings
 	echo "ir_enable=0" > $CONFIG
 
 	# clean up temporary files
+	rm /etc/config/metadata.txt
 	rm ftp_tmp.scr
 	rm IR_ftp_tmp.scr
 
@@ -191,16 +197,21 @@ else
 	# device to adjust in memory settings
 	nrlines=`awk 'END {print NR}' overlay0_tmp.conf`
 
-	for i in `seq 1 $nrlines` ;
+	for i in `seq 1 $nrservers` ;
 	do
 	 awk -v p=$i 'NR==p' overlay0_tmp.conf > /dev/video/config0
 	done
 
-	# run the upload script With RGB enabled (default)
-	ftpscript ftp_tmp.scr >> $LOG
-	rm /etc/config/metadata.txt
+	# cycle over all servers and upload the data
+	for i in `seq 1 $nrservers` ;
+	do
+		SERVER=`awk -v p=$i 'NR==p' server.txt` 
+		cat ftp.scr | sed "s/DATETIMESTRING/$DATETIMESTRING/g" | sed "s/SERVER/$SERVER/g" > ftp_tmp.scr
+ 		ftpscript ftp_tmp.scr >> $LOG
+	done
 
 	# clean up temporary files
+	rm /etc/config/metadata.txt
 	rm ftp_tmp.scr
 fi
 
@@ -218,8 +229,5 @@ rm overlay0_tmp.conf
 # Reset the configuration to 
 # the default RGB settings (just in case it's stuck at IR)
 echo "ir_enable=0" > $CONFIG
-
-# remove external ip address data
-
 
 exit
