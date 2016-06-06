@@ -4,13 +4,17 @@ PhenoCam Installation Tool (PIT) is a set of scripts for Linux/Mac OSX and Windo
 
 Custom changes can be made to the code to suite your own needs. However, remember to save any changes twice. First by altering the configuration files you want to see changed, second by writing these changes from volatile to persistent (flash) memory using the following command:
 
-	config save
+```bash
+config save
+```
 
 ## Installation
 
 clone the project to your home computer using the following command (with git installed)
 
-	git clone https://github.com/khufkens/phenocam-installation-tool.git
+```bash
+git clone https://github.com/khufkens/phenocam-installation-tool.git
+```
 
 alternatively, download the project using download button.
 
@@ -25,17 +29,24 @@ The installation **requires** you to have a working internet connection on the c
 ### Windows
 On the command prompt of a terminal the scripts have the same syntax, for Windows script this would be:
 
-	PIT.bat IP USER PASSWORD CAMERA TIME_OFFSET TZ CRON_START CRON_END CRON_INT FTP_MODE
+```bash
+PIT.bat IP USER PASSWORD CAMERA TIME_OFFSET TZ CRON_START CRON_END CRON_INT FTP_MODE
+```
 
 You will need the telnet.exe program to be installed on your computer. As of Windows 7 this isn't installed by default anymore but can still be downloaded from the Microsoft website. Full instructions can be found [here](http://technet.microsoft.com/en-us/library/cc771275%28v=ws.10%29.aspx).
 
 ### Linux / OSX
 On Linux / Mac OSX systems this would read:
 
-	sh PIT.sh IP USER PASSWORD CAMERA TIME_OFFSET TZ CRON_START CRON_END CRON_INT FTP_MODE
+```bash
+sh PIT.sh IP USER PASSWORD CAMERA TIME_OFFSET TZ CRON_START CRON_END CRON_INT FTP_MODE
+```
+
 or
 
-	./PIT.sh IP USER PASSWORD CAMERA TIME_OFFSET TZ CRON_START CRON_END CRON_INT FTP_MODE
+```bash
+./PIT.sh IP USER PASSWORD CAMERA TIME_OFFSET TZ CRON_START CRON_END CRON_INT FTP_MODE
+```
 
 with:
 
