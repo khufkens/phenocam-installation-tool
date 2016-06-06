@@ -39,10 +39,10 @@ or
 
 with:
 
-Parameter     | Description                    	
-------------- | ------------------------------ 	
-IP	      | ip address of the camera 		
-USER	      | user name (admin - if not set) 	
+Parameter     | Description
+------------- | ------------------------------ 
+IP	      | ip address of the camera 
+USER	      | user name (admin - if not set) 
 PASSWORD      | user password (on a new Stardot NetCam this is admin) 
 CAMERA        | the name of the camera / site
 TIME_OFFSET   | difference in hours from UTC of the timezone in which the camera resides (always use + or - signs to denote differences from UTC)
@@ -55,20 +55,27 @@ FTP_MODE      | active or passive (default = passive)
 
 An example of our in lab test camera configuration:
 
-	./PIT.sh 140.247.89.xx admin admin testcam3 -5 EST 4 22 30 passive
-	
+```bash
+./PIT.sh 140.247.89.xx admin admin testcam3 -5 EST 4 22 30 passive
+```
+
 or
-	
-	./PIT.sh 140.247.89.xx admin admin testcam3 -5 EST 4 22 30 passive
+
+```bash	
+./PIT.sh 140.247.89.xx admin admin testcam3 -5 EST 4 22 30 passive
+```
 	
 for an active FTP connection (necessary for some cameras)
 
 This configures the camera 'testcam3', located in the EST time zone (UTC -5) to take images every half hour between 4 and 22h.
 
-## Additional information
+## Additional information and settings
 
 The script will take care of any differences in model types, and will enable the upload of infrared (IR) images by default (if available). After the install be sure to check the results by browsing to the camera's IP address. You can see that the above commands have taken effect as the name and time zone offset are mentioned in the overlay on top of the image. If you are not sure about your time zone offset a visual time zone map can be found [here](http://www.timeanddate.com/time/map/).
 
 Throughout the installation procedure the command prompt gives you feedback on the process. To test a succesful install it will try to upload a set of images to the PhenoCam server. If you request a site name beforehand (the data directory has to be created on the server), we can validate if the setup is pushing data correctly right after your install.
 
-Critical in the operation is that you check and double check the input parameters (no checks are in place yet). Although the script will never 'brick' a camera it can push settings which make the camera not behave properly and hard to reconfigure. In such a case the configuration of the camera can be reset to factory defaults by pushing the reset button on the back of the camera using a small rod. However, if access to the site is difficult you might want to make sure you push the right settings to the camera. Furthermore, as the configuration files are pulled from the PhenoCam server, internet access is vital to configure the camera correctly, if you have only intermitted internet access on your site make sure to run the install script during this time.
+Critical in the operation is that you check and double check the input parameters (no true checks are in place). Although the script will never 'brick' a camera it can push settings which make the camera not behave properly and hard to reconfigure. In such a case the configuration of the camera can be reset to factory defaults by pushing the reset button on the back of the camera using a small rod. However, if access to the site is difficult you might want to make sure you push the right settings to the camera. Furthermore, as the configuration files are pulled from the PhenoCam server, internet access is vital to configure the camera correctly, if you have only intermitted internet access on your site make sure to run the install script during this time.
+
+If a backup upload is required to a different server please edit the server.txt file. Here each line represents a server address. The server layout should adhere to the PhenoCam structure, where in the ftp root directory the data is stored in ~/data/your_camera_name directory.
+
