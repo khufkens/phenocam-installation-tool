@@ -52,7 +52,7 @@ nrservers=`awk 'END {print NR}' server.txt`
 # -------------- UPLOAD IMAGES --------------------------------------
 
 # grab camera info and make sure it is an IR camera
-IR=`status | grep IR | tail -c 2`
+IR=`status | grep IR |  awk -F'IR:' '{print $2}' | cut -d' ' -f1`
 
 # grab camera temperature from memory put it into
 # variable TEMP
