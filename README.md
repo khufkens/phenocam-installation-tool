@@ -73,7 +73,7 @@ An example of our in lab test camera configuration:
 or
 
 ```bash	
-./PIT.sh 140.247.89.xx admin admin testcam3 -5 EST 4 22 30 passive
+./PIT.sh 140.247.89.xx admin admin testcam3 -5 EST 4 22 30 active
 ```
 	
 for an active FTP connection (necessary for some cameras)
