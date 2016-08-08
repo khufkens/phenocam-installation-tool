@@ -107,8 +107,6 @@ To set camera to run on the hour you would use the following line (minute zero o
 0 4-22 * * * admin sh /etc/config/phenocam_upload.sh
 ```
 
-Adjust your system accordingly if you only have limited connectivity.
-
 ## Additional information and settings
 
 The script will take care of any differences in model types, and will enable the upload of infrared (IR) images by default (if available). After the install be sure to check the results by browsing to the camera's IP address. You can see that the above commands have taken effect as the name and time zone offset are mentioned in the overlay on top of the image. If you are not sure about your time zone offset a visual time zone map can be found [here](http://www.timeanddate.com/time/map/).
