@@ -82,9 +82,22 @@ This configures the camera 'testcam3', located in the EST time zone (UTC -5) to 
 
 ### Systems with short acquisition windows (on timers / limited power)
 
-The PIT configures the cameras to randomly upload images within every time window. This reduces traffic on systems with multiple cameras and the server. However, on systems on timers with only a limited window for acquisition this random factor might cause the camera to not fire within the alloted time. To mediate this manually edit the system's crontab to correspond to the settings on your system.
+The PIT configures the cameras to randomly upload images within every time window. This reduces traffic on systems with multiple cameras and the server. However, on systems on timers with only a limited window for acquisition this random factor might cause the camera to not fire within the alloted time. To mediate this **manually edit** the system's crontab to correspond to the settings on your system. 
 
-The crontab file is formated as such:
+You can edit the crontab file by using the vi editor if you login to the home directory using telnet:
+
+```bash
+vi crontab
+```
+after editting the file make sure to save the settings by issueing the save command:
+
+```bash
+config save
+```
+
+Alternatively, edit the file through the advanced settings tab of the web interface of the camera. Hit the save button on the interface twice to guarantee that your settings will remain stored after reboot.
+
+A crontab file is formated as such:
 ```bash
 minute hour day month day-of-week command-line-to-execute
 ```
