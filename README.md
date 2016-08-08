@@ -80,6 +80,18 @@ for an active FTP connection (necessary for some cameras)
 
 This configures the camera 'testcam3', located in the EST time zone (UTC -5) to take images every half hour between 4 and 22h.
 
+### Systems with short acquisition windows (on timers / limited power)
+
+The PIT configures the cameras to randomly upload images within every time window. This reduces traffic on systems with multiple cameras and the server. However, on systems on timers with only a limited window for acquisition this random factor might cause the camera to not fire within the alloted time. To mediate this manually edit the system's crontab to correspond to the settings on your system.
+
+The crontab file is formated as such:
+	minute hour day month day-of-week command-line-to-execute
+
+To set camera to run on the hour you would use the following line (minute zero of every hour between 4 - 22):
+	0 4-22 * * * admin sh /etc/config/phenocam_upload.sh
+
+Adjust your system accordingly if you only have limited connectivity.
+
 ## Additional information and settings
 
 The script will take care of any differences in model types, and will enable the upload of infrared (IR) images by default (if available). After the install be sure to check the results by browsing to the camera's IP address. You can see that the above commands have taken effect as the name and time zone offset are mentioned in the overlay on top of the image. If you are not sure about your time zone offset a visual time zone map can be found [here](http://www.timeanddate.com/time/map/).
