@@ -257,6 +257,9 @@ cat /etc/default/start > start
 echo "ln -s /etc/config/metadata.cgi /var/httpd/metadata.cgi" >> start
 echo "ln -s /etc/config/rgb.cgi /var/httpd/rgb.cgi" >> start
 
+# upload an image upon restart!
+echo "/etc/config/./phenocam_upload.sh" >> start
+
 echo ""
 echo "#--------------------------------------------------------------------"
 echo "#"
