@@ -80,13 +80,33 @@ for an active FTP connection (necessary for some cameras)
 
 This configures the camera 'testcam3', located in the EST time zone (UTC -5) to take images every half hour between 4 and 22h.
 
+## CGI pull
+
+By default the camera will push images over FTP to the PhenoCam server. However, in power limited locations without an FTP connection a pull request is favoured.
+
+Two CGI scripts allow you to query both the metadata associated with an image and the current image itself.
+
+You can call the metadata and the latest image using the following commands:
+
+```bash
+# metadata
+get 140.247.89.xx/metadata.cgi
+
+# image (rgb or NIR, depending on settings)
+get 140.247.89.xx/rgb.cgi
+```
+
+Example code to interface with a LiCor CR1000 is provided by Earl Keel in the repository (FTP / SD card based installs respectivelly). The installation instructions for this code can be found here (you can disregard the installation instruction of the code on the camera end as this is taken care of by the PIT).
+
 ## Additional information and settings
 
+#### how to setup the camera correctly
 The script will take care of any differences in model types, and will enable the upload of infrared (IR) images by default (if available). After the install be sure to check the results by browsing to the camera's IP address. You can see that the above commands have taken effect as the name and time zone offset are mentioned in the overlay on top of the image. If you are not sure about your time zone offset a visual time zone map can be found [here](http://www.timeanddate.com/time/map/).
 
-Throughout the installation procedure the command prompt gives you feedback on the process. To test a succesful install it will try to upload a set of images to the PhenoCam server. If you request a site name beforehand (the data directory has to be created on the server), we can validate if the setup is pushing data correctly right after your install.
+The script will never 'brick' a camera it can push settings which make the camera not behave properly and hard to reconfigure. In such a case the configuration of the camera can be reset to factory defaults by pushing the reset button on the back of the camera using a small rod. 
 
-Critical in the operation is that you check and double check the input parameters (no true checks are in place). Although the script will never 'brick' a camera it can push settings which make the camera not behave properly and hard to reconfigure. In such a case the configuration of the camera can be reset to factory defaults by pushing the reset button on the back of the camera using a small rod. However, if access to the site is difficult you might want to make sure you push the right settings to the camera. Furthermore, as the configuration files are pulled from the PhenoCam server, internet access is vital to configure the camera correctly, if you have only intermitted internet access on your site make sure to run the install script during this time.
+Always configure your camera in the lab, before field installation. During configuration files are pulled from the PhenoCam server, internet access is vital to configure the camera correctly.
 
-If a backup upload is required to a different server please edit the server.txt file. Here each line represents a server address. The server layout should adhere to the PhenoCam structure, where in the ftp root directory the data is stored in ~/data/your_camera_name directory.
+#### personal backup
 
+If a backup to a personal server is required to a different server please edit the server.txt file. Here each line represents a server address. Your personal server layout should adhere to the PhenoCam structure, where in the ftp root directory the data is stored in ~/data/your_camera_name directory. Images are uploaded sequentially, but timestamps are matched.
