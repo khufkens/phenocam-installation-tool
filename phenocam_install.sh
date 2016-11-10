@@ -245,11 +245,6 @@ chmod +x rgb.cgi
 ln -s /etc/config/metadata.cgi /var/httpd/metadata.cgi
 ln -s /etc/config/rgb.cgi /var/httpd/rgb.cgi
 
-# add the previous lines to the start script to reset these links
-# after reboot
-metadata=`grep metadata.cgi start | wc -ln`
-rgb=`grep rgb.cgi start | wc -ln`
-
 # copy the default start parameters into the config
 # directory, add the soft links. The latter ensures
 # that the pull cgi scripts are callable after reboot
