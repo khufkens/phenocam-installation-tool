@@ -149,6 +149,7 @@ gzip $NEW_CAMERA_NAME\_backup_settings\_$TODAY.tar
 ftp -n << EOF
 	open $HOST
 	user $USER $PASSWD
+	$FTPMODE
 	cd data/$NEW_CAMERA_NAME
 	binary
 	put $NEW_CAMERA_NAME\_backup_settings\_$TODAY.tar.gz
