@@ -108,7 +108,7 @@ if [ "$IR" = "1" ]; then
 	cat /dev/video/config0 > /etc/config/metadata.txt
 
 	# colate everything
-	echo "ip_addr=$ip" >> /etc/config/metadata.txt
+	echo "ip_addr=$ip_addr" >> /etc/config/metadata.txt
 	#echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
 	echo "mac_addr=$mac" >> /etc/config/metadata.txt
 	echo "datetime_original=\"$METADATETIME\"" >> /etc/config/metadata.txt
@@ -148,7 +148,7 @@ if [ "$IR" = "1" ]; then
 	cat /dev/video/config0 > /etc/config/metadata.txt
 
 	# colate everything
-	echo "ip_addr=$ip" >> /etc/config/metadata.txt
+	echo "ip_addr=$ip_addr" >> /etc/config/metadata.txt
 	#echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
 	echo "mac_addr=$mac" >> /etc/config/metadata.txt
 	echo "datetime_original=\"$METADATETIME\"" >> /etc/config/metadata.txt
@@ -194,7 +194,7 @@ else
 	cat /dev/video/config0 > /etc/config/metadata.txt
 
 	# colate everything
-	echo "ip_addr=$ip" >> /etc/config/metadata.txt
+	echo "ip_addr=$ip_addr" >> /etc/config/metadata.txt
 	#echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
 	echo "mac_addr=$mac" >> /etc/config/metadata.txt
 	echo "datetime_original=\"$METADATETIME\"" >> /etc/config/metadata.txt
