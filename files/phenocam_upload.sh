@@ -105,9 +105,9 @@ if [ "$IR" = "1" ]; then
 	cat /dev/video/config0 > /etc/config/metadata.txt
 
 	# colate everything
-	echo "ip_addr=$ip" >> /etc/config/metadata.txt
+	echo "ip_addr=$ip_addr" >> /etc/config/metadata.txt
 	#echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
-	echo "mac_addr=$mac" >> /etc/config/metadata.txt
+	echo "mac_addr=$mac_addr" >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
 	# device to adjust in memory settings
@@ -144,9 +144,9 @@ if [ "$IR" = "1" ]; then
 	cat /dev/video/config0 > /etc/config/metadata.txt
 
 	# colate everything
-	echo "ip_addr=$ip" >> /etc/config/metadata.txt
+	echo "ip_addr=$ip_addr" >> /etc/config/metadata.txt
 	#echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
-	echo "mac_addr=$mac" >> /etc/config/metadata.txt
+	echo "mac_addr=$mac_addr" >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
 	# device to adjust in memory settings
@@ -189,9 +189,9 @@ else
 	cat /dev/video/config0 > /etc/config/metadata.txt
 
 	# colate everything
-	echo "ip_addr=$ip" >> /etc/config/metadata.txt
+	echo "ip_addr=$ip_addr" >> /etc/config/metadata.txt
 	#echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
-	echo "mac_addr=$mac" >> /etc/config/metadata.txt
+	echo "mac_addr=$mac_addr" >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
 	# device to adjust in memory settings
