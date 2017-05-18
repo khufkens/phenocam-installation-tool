@@ -67,6 +67,9 @@ DATE=`date +"%a %b %d %Y %H:%M:%S"`
 # slight offset due to the time needed to adjust exposure
 DATETIMESTRING=`date +"%Y_%m_%d_%H%M%S"`
 
+# grab date and time for `.meta` files
+METADATETIME=`date -Iseconds`
+
 # substitute the values in the ftp.scr and IR_ftp.scr
 # upload scripts
 cat IR_ftp.scr | sed "s/DATETIMESTRING/$DATETIMESTRING/g" > IR_ftp_tmp.scr
@@ -107,7 +110,8 @@ if [ "$IR" = "1" ]; then
 	# colate everything
 	echo "ip_addr=$ip_addr" >> /etc/config/metadata.txt
 	#echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
-	echo "mac_addr=$mac_addr" >> /etc/config/metadata.txt
+	echo "mac_addr=$mac" >> /etc/config/metadata.txt
+	echo "datetime_original=\"$METADATETIME\"" >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
 	# device to adjust in memory settings
@@ -146,7 +150,8 @@ if [ "$IR" = "1" ]; then
 	# colate everything
 	echo "ip_addr=$ip_addr" >> /etc/config/metadata.txt
 	#echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
-	echo "mac_addr=$mac_addr" >> /etc/config/metadata.txt
+	echo "mac_addr=$mac" >> /etc/config/metadata.txt
+	echo "datetime_original=\"$METADATETIME\"" >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
 	# device to adjust in memory settings
@@ -191,7 +196,8 @@ else
 	# colate everything
 	echo "ip_addr=$ip_addr" >> /etc/config/metadata.txt
 	#echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
-	echo "mac_addr=$mac_addr" >> /etc/config/metadata.txt
+	echo "mac_addr=$mac" >> /etc/config/metadata.txt
+	echo "datetime_original=\"$METADATETIME\"" >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
 	# device to adjust in memory settings
