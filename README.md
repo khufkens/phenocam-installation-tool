@@ -58,8 +58,8 @@ PASSWORD      | user password (on a new Stardot NetCam this is admin)
 CAMERA        | the name of the camera / site
 TIME_OFFSET   | difference in hours from UTC of the timezone in which the camera resides (always use + or - signs to denote differences from UTC)
 TZ            | a text string corresponding to the local time zone (e.g. EST)
-CRON_START    | start of the scheduled image acquisitions (e.g. 4 in the morning)
-CRON_END      | end of the scheduled image acquisitions (e.g. ten at night, so 22 in 24-h notation)
+CRON_START    | first hour of the scheduled image acquisitions (e.g. 4 in the morning)
+CRON_END      | last hour of the scheduled image acquisitions (e.g. ten at night, so 22 in 24-h notation)
 CRON_INT      | interval at which to take pictures (e.g. 15, every 15 minutes - default phenocam setting is 30)
 FTP_MODE      | active or passive (default = passive)
 [all parameters are required!]
@@ -78,7 +78,7 @@ or
 	
 for an active FTP connection (necessary for some cameras)
 
-This configures the camera 'testcam3', located in the EST time zone (UTC -5) to take images every half hour between 4 and 22h.
+This configures the camera 'testcam3', located in the EST time zone (UTC -5) to take images every half hour between 4 and 23h.
 
 ### Systems with short acquisition windows (on timers / limited power)
 
@@ -102,10 +102,13 @@ A crontab file is formated as such:
 minute hour day month day-of-week command-line-to-execute
 ```
 
-To set camera to run on the hour you would use the following line (minute zero of every hour between 4 - 22):
+To set camera to run on the hour you would use the following line (minute zero of every hour from 4 - 22 inclusive):
 ```bash
 0 4-22 * * * admin sh /etc/config/phenocam_upload.sh
 ```
+
+There are several good cron references out there. [Here](https://linux.die.net/man/5/crontab) is one.
+
 
 ## Additional information and settings
 
