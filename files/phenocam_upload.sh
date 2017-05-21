@@ -110,7 +110,7 @@ if [ "$IR" = "1" ]; then
 	# colate everything
 	echo "ip_addr=$ip_addr" >> /etc/config/metadata.txt
 	#echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
-	echo "mac_addr=$mac" >> /etc/config/metadata.txt
+	echo "mac_addr=$mac_addr" >> /etc/config/metadata.txt
 	echo "datetime_original=\"$METADATETIME\"" >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
@@ -150,7 +150,7 @@ if [ "$IR" = "1" ]; then
 	# colate everything
 	echo "ip_addr=$ip_addr" >> /etc/config/metadata.txt
 	#echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
-	echo "mac_addr=$mac" >> /etc/config/metadata.txt
+	echo "mac_addr=$mac_addr" >> /etc/config/metadata.txt
 	echo "datetime_original=\"$METADATETIME\"" >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
@@ -196,7 +196,7 @@ else
 	# colate everything
 	echo "ip_addr=$ip_addr" >> /etc/config/metadata.txt
 	#echo "ip_ext_addr=$ip_ext_addr" >> /etc/config/metadata.txt
-	echo "mac_addr=$mac" >> /etc/config/metadata.txt
+	echo "mac_addr=$mac_addr" >> /etc/config/metadata.txt
 	echo "datetime_original=\"$METADATETIME\"" >> /etc/config/metadata.txt
 
 	# dump overlay configuration to /dev/video/config0
