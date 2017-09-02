@@ -91,16 +91,18 @@ else
     CRONINT="30"
 fi
 
-# set the ftp mode to "active"
-# meaning (don't set it to passive)
+# set ftp mode to active ("") if not specified
 if [ -n "$7" ]; then
-	FTPMODE=""
-else
 	if [ "$7" = "active" ]; then
 		FTPMODE=""
-	   else
+	else if [ "$7" = "passive" ]; then
 		FTPMODE="passive"
+	else
+		echo "Invalid option provided for FTP mode - defaulting to active"
+		FTPMODE=""
 	fi
+else
+	FTPMODE=""
 fi
 
 # upload / download server - location from which to grab and
