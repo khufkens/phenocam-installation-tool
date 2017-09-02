@@ -107,7 +107,7 @@ fi
 
 # upload / download server - location from which to grab and
 # and where to put config files
-HOST='klima.sr.unh.edu'
+HOST='phenocam.sr.unh.edu'
 USER='anonymous'
 PASSWD='anonymous'
 
@@ -185,7 +185,7 @@ if [ -f phenocam_default_install.tar* ]; then
 fi
 
 # download the installation files from the PhenoCam servers
-wget $HOST/data/configs/phenocam_default_install.tar.gz
+wget http://$HOST/data/configs/phenocam_default_install.tar.gz
 
 gunzip phenocam_default_install.tar.gz
 tar -xvf phenocam_default_install.tar
