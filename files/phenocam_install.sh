@@ -132,15 +132,15 @@ cd /etc/config
 echo "setting name server to 8.8.8.8"
 echo "nameserver 8.8.8.8" > resolv.conf
 
-# # check IPv4 network connectivity
-# if ping -q -c 1 8.8.8.8 >/dev/null; then
-#     echo "IPv4 is up"
-# else
-#     echo "IPv4 is down"
-#     echo "The camera doesn't seem to have access to the network!"
-#     echo "This is required to run the phenocam-installation-tool"
-#     exit
-# fi
+# check IPv4 network connectivity
+if ping -q -c 1 8.8.8.8 >/dev/null; then
+    echo "IPv4 is up"
+else
+    echo "IPv4 is down"
+    echo "The camera doesn't seem to have access to the network!"
+    echo "This is required to run the phenocam-installation-tool"
+    echo "**** Trying to proceed without verifying network. ****"
+fi
 
 # -------------- BACKUP OLD CONFIG ----------------------------------
 
