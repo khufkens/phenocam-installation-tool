@@ -78,25 +78,29 @@ if [ -n "$4" ]; then
 else
     CRONSTART="4"
 fi
+echo "cron start time set to: ${CRONSTART}"
 
 if [ -n "$5" ]; then
     CRONEND=$5
 else
     CRONEND="22"
 fi
+echo "cron end time set to: ${CRONEND}"
 
 if [ -n "$6" ]; then
     CRONINT=$6
 else
     CRONINT="30"
 fi
+echo "cron interval set to: ${CRONINT}"
 
-# set ftp mode to passive if "active" is not specified
+# set ftp mode to passive if "passive" is not specified
+echo "setting FTP mode"
 if [ -n "$7" ]; then
 	if [ "$7" = "active" ]; then
                 echo "Using default FTP mode (none/active)."
 		FTPMODE=""
-	else if [ "$7" = "passive" ]; then
+	elif [ "$7" = "passive" ]; then
                 echo "Setting FTP mode to passive."
 		FTPMODE="passive"
 	else
@@ -125,7 +129,18 @@ cd /etc/config
 # overwrite default nameserver (DNS) with universal google DNS server
 # if these settings are not correct subsequent calls to the server
 # might fail
+echo "setting name server to 8.8.8.8"
 echo "nameserver 8.8.8.8" > resolv.conf
+
+# check IPv4 network connectivity
+if ping -q -c 1 8.8.8.8 >/dev/null; then
+    echo "IPv4 is up"
+else
+    echo "IPv4 is down"
+    echo "The camera doesn't seem to have access to the network!"
+    echo "This is required to run the phenocam-installation-tool"
+    echo "**** Trying to proceed without verifying network. ****"
+fi
 
 # -------------- BACKUP OLD CONFIG ----------------------------------
 
@@ -149,7 +164,7 @@ fi
 # archive all settings
 tar -cf $NEW_CAMERA_NAME\_backup_settings\_$TODAY.tar *.conf *.scr
 
-# zip stuff
+# gzip stuff
 gzip $NEW_CAMERA_NAME\_backup_settings\_$TODAY.tar
 
 ftp -n << EOF
@@ -184,11 +199,13 @@ echo "#--------------------------------------------------------------------"
 echo ""
 
 # remove previous install files
+echo "removing old installation files first"
 if [ -f phenocam_default_install.tar* ]; then
 	rm phenocam_default_install.tar*
 fi
 
 # download the installation files from the PhenoCam servers
+echo "downloading new installation files from phenocam server"
 wget http://$HOST/data/configs/phenocam_default_install.tar.gz
 
 gunzip phenocam_default_install.tar.gz
@@ -206,7 +223,10 @@ fi
 
 # grab camera info and make sure it is an IR camera
 MODEL=`status | grep Product | cut -d'/' -f3 | cut -d'-' -f1`
+echo "Camera model found: ${MODEL}"
+
 IR=`status | grep IR | sed -e 's#.*IR:\(\)#\1#' | cut -d' ' -f1`
+echo "IR mode: ${IR}"
 
 # new 3 / 5 MP models with or without IR
 if [ "$MODEL" = "NetCamSC" ]; then
@@ -260,6 +280,7 @@ echo "ln -s /etc/config/metadata.cgi /var/httpd/metadata.cgi" >> start
 echo "ln -s /etc/config/rgb.cgi /var/httpd/rgb.cgi" >> start
 
 # upload an image upon restart!
+echo "configuring camera to upload image on restart"
 echo "sh /etc/config/phenocam_upload.sh" >> start
 
 echo ""
