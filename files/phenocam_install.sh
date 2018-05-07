@@ -264,7 +264,7 @@ cat default_ntp.server 	> ntp.server
 cat default_sched0.conf > sched0.conf
 
 # remove all default files
-rm default_*
+# rm default_*
 
 # set the links to the cgi scripts for pull requests
 chmod +x metadata.cgi
