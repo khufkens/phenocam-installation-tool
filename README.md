@@ -13,7 +13,7 @@ config save
 clone the project to your home computer using the following command (with git installed)
 
 ```bash
-git clone https://github.com/khufkens/phenocam-installation-tool.git
+git clone https://github.com/khufkens/phenocam-installation-tool.git -b icos
 ```
 
 alternatively, download the project using download button.

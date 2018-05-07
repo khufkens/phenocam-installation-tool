@@ -28,7 +28,7 @@ echo "$3"
 sleep 1
 echo "cd /etc/config"
 sleep 1
-echo "wget http://phenocam.sr.unh.edu/data/configs/phenocam_default_install.tar.gz"
+echo "wget http://icos-etc.eu/configs/phenocam_default_install.tar.gz"
 sleep 1
 echo "gunzip phenocam_default_install.tar.gz"
 sleep 1
