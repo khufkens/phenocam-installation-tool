@@ -115,7 +115,7 @@ fi
 
 # upload / download server - location from which to grab and
 # and where to put config files
-HOST='phenocam.sr.unh.edu'
+HOST='phenocam.icos-etc.eu'
 USER='anonymous'
 PASSWD='anonymous'
 
