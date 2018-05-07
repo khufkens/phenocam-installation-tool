@@ -10,6 +10,8 @@ config save
 
 ## Installation
 
+### PhenoCam network
+
 clone the project to your home computer using the following command (with git installed)
 
 ```bash
@@ -17,6 +19,20 @@ git clone https://github.com/khufkens/phenocam-installation-tool.git
 ```
 
 alternatively, download the project using download button.
+
+Unzip the downloaded files or use the files cloned by git as is.
+
+### ICOS network
+
+clone the project to your home computer using the following command (with git installed)
+
+```bash
+git clone https://github.com/khufkens/phenocam-installation-tool.git -b icos
+```
+
+Alternatively, download the project using download button when on the ICOS branch page:
+
+[https://github.com/khufkens/phenocam-installation-tool/tree/icos](https://github.com/khufkens/phenocam-installation-tool/tree/icos).
 
 Unzip the downloaded files or use the files cloned by git as is.
 
