@@ -11,7 +11,8 @@ For the script to run successfully you will need a telnet client. As of Windows 
 Similar, more recent versions of MacOS (formerly OSX) do not include the telnet client either. You will have to install the client by following these instructions:
 
 ```
-1 - It is required that you have XCODE installed and configured to be able to compile the packages. Access the terminal / shell
+1 - It is required that you have XCODE installed and configured
+to be able to compile the packages. Access the terminal / shell
 
 2 - Download the latest version of the inetutils package:
 http://ftp.gnu.org/gnu/inetutils/
@@ -33,8 +34,7 @@ cd inetutils-1.9.4
 6 - To compile execute:
 make
 
-7 - For the installation I ddin't use make install, I preferred to copy only the necessary files to /usr/local/bin/ , as below:
-
+7 - Copy only the necessary files to /usr/local/bin/ , as below:
 sudo cp telnet/telnet /usr/local/bin/
 ```
 
