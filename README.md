@@ -2,13 +2,37 @@
 
 PhenoCam Installation Tool (PIT) is a set of scripts for Linux/Mac OSX and Windows taking care of the settings as needed by cameras installed by or associated with the [PhenoCam network](http://phenocam.sr.unh.edu).
 
-Custom changes can be made to the code to suite your own needs. However, remember to save any changes twice. First by altering the configuration files you want to see changed, second by writing these changes from volatile to persistent (flash) memory using the following command:
-
-```bash
-config save
-```
-
 ## Installation
+
+### prerequisites
+
+For the script to run successfully you will need a telnet client. As of Windows 7 telnet is not installed by default anymore but can still be downloaded from the Microsoft website. Full instructions can be found [here](http://technet.microsoft.com/en-us/library/cc771275%28v=ws.10%29.aspx).
+
+Similar, more recent versions of MacOS (formerly OSX) do not include the telnet client either. You will have to install the client by following these instructions:
+
+```
+1 - It is required that you have XCODE installed and configured to be able to compile the packages. Access the terminal / shell
+
+2 - Download the latest version of the inetutils package:
+http://ftp.gnu.org/gnu/inetutils/
+
+3 - Unpack with:
+tar xvjf inetutils-1.9.4.tar.gz
+  
+4 - Enter the inetutils-1.9.4 folder with:
+cd inetutils-1.9.4
+
+5 - Configure the package with the following:
+./configure --disable-servers --disable-dnsdomainname --disable-hostname --disable-ping --disable-ping6 --disable-rcp --disable-rexec --disable-rlogin --disable-rsh --disable-logger --disable-talk --disable-tftp --disable-whois --disable-ifconfig --disable-traceroute
+
+6 - To compile execute:
+make
+
+7 - For the installation I ddin't use make install, I preferred to copy only the necessary files to /usr/local/bin/ , as below:
+
+sudo cp telnet/telnet /usr/local/bin/
+sudo cp ftp/ftp /usr/local/bin/
+```
 
 ### PhenoCam network
 
@@ -48,8 +72,6 @@ On the command prompt of a terminal the scripts have the same syntax, for Window
 ```bash
 PIT.bat IP USER PASSWORD CAMERA TIME_OFFSET TZ CRON_START CRON_END CRON_INT FTP_MODE
 ```
-
-You will need the telnet.exe program to be installed on your computer. As of Windows 7 this isn't installed by default anymore but can still be downloaded from the Microsoft website. Full instructions can be found [here](http://technet.microsoft.com/en-us/library/cc771275%28v=ws.10%29.aspx).
 
 ### Linux / OSX
 On Linux / Mac OSX systems this would read:
@@ -134,5 +156,8 @@ Throughout the installation procedure the command prompt gives you feedback on t
 
 Critical in the operation is that you check and double check the input parameters (no true checks are in place). Although the script will never 'brick' a camera it can push settings which make the camera not behave properly and hard to reconfigure. In such a case the configuration of the camera can be reset to factory defaults by pushing the reset button on the back of the camera using a small rod. However, if access to the site is difficult you might want to make sure you push the right settings to the camera. Furthermore, as the configuration files are pulled from the PhenoCam server, internet access is vital to configure the camera correctly, if you have only intermitted internet access on your site make sure to run the install script during this time.
 
-If a backup upload is required to a different server please edit the server.txt file. Here each line represents a server address. The server layout should adhere to the PhenoCam structure, where in the ftp root directory the data is stored in ~/data/your_camera_name directory.
+If a backup upload is required to a different server please edit the server.txt file. Here each line represents a server address. The server layout should adhere to the PhenoCam structure, where in the ftp root directory the data is stored in ~/data/your_camera_name directory. Write these changes on the camera from volatile to persistent (flash) memory using the following command:
 
+```bash
+config save
+```
