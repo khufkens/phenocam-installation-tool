@@ -8,7 +8,7 @@ PhenoCam Installation Tool (PIT) is a set of scripts for Linux/Mac OSX and Windo
 
 For the script to run successfully you will need a telnet client. As of Windows 7 telnet is not installed by default anymore but can still be downloaded from the Microsoft website. Full instructions can be found [here](http://technet.microsoft.com/en-us/library/cc771275%28v=ws.10%29.aspx).
 
-Similar, more recent versions of MacOS (formerly OSX) do not include the telnet client either. You will have to install the client by following these instructions:
+Similarly, more recent versions of MacOS (formerly OSX) do not include the telnet client either. You will have to install the client by following these instructions:
 
 ```
 1 - It is required that you have XCODE installed and configured
