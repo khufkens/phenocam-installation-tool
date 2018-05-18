@@ -23,7 +23,12 @@ tar xvjf inetutils-1.9.4.tar.gz
 cd inetutils-1.9.4
 
 5 - Configure the package with the following:
-./configure --disable-servers --disable-dnsdomainname --disable-hostname --disable-ping --disable-ping6 --disable-rcp --disable-rexec --disable-rlogin --disable-rsh --disable-logger --disable-talk --disable-tftp --disable-whois --disable-ifconfig --disable-traceroute
+./configure --disable-servers --disable-dnsdomainname\
+--disable-hostname --disable-ping --disable-ping6\
+--disable-rcp --disable-rexec --disable-rlogin\
+--disable-rsh --disable-logger --disable-talk\
+--disable-tftp --disable-whois --disable-ifconfig\
+--disable-traceroute
 
 6 - To compile execute:
 make
@@ -31,7 +36,6 @@ make
 7 - For the installation I ddin't use make install, I preferred to copy only the necessary files to /usr/local/bin/ , as below:
 
 sudo cp telnet/telnet /usr/local/bin/
-sudo cp ftp/ftp /usr/local/bin/
 ```
 
 ### PhenoCam network
