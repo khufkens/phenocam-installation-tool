@@ -64,6 +64,37 @@ Alternatively, download the project using download button when on the ICOS branc
 
 Unzip the downloaded files or use the files cloned by git as is.
 
+### Third party network
+
+When using a third party network you can change the SERVER, USER, and PASSWD parameters in the installation script (**phenocam_install.sh**, see files subdirectory in the repository), and repackage the file as shown below.
+
+```bash
+# clone the archive
+git clone https://github.com/khufkens/phenocam-installation-tool.git
+
+# enter the files subdir
+cd phenocam-installation-tool/files/
+
+# Edit the install file to include custom server, and ftp # login information.
+
+# tar gzip the file on osx / ubuntu / windows 
+tar czf phenocam_default_install.tar.gz *
+
+# finally move the file to its final destination
+mv phenocam_default_install.tar.gz /your/www/directory/
+```
+On a windows system use the [Ubuntu linux subsystem](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to get access to the above command line tools.
+
+Finally, edit either the PIT.bat or PIT.sh files to reflect the location of the new phenocam_default_install.tar.gz file. Note that the file should be served through a normal HTTP connection (not a HTTPS one).
+
+Make sure you have a personal FTP server available with a **data** directory available from the FTP root. The camera will attempt to upload data to:
+
+```
+/data/your_camera_name_1
+```
+
+Create new subdirectories in **data** based on the cameras (names) you add to the network
+
 ## Use
 
 The installation script runs within a terminal on all platforms. To open a terminal search for “Terminal” in OSX spotlight or “cmd” in the program search field (under the Start button) in Windows. For linux users I assume a familiarity with opening a terminal.
