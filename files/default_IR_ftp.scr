@@ -1,6 +1,6 @@
 timeout 200
 open SERVER
-user anonymous anonymous
+user USER PASSWORD
 FTPMODE
 ascii
 put /etc/config/metadata.txt data/mycamera/mycamera_IR_DATETIMESTRING.meta

@@ -1,6 +1,6 @@
 timeout 200
 open SERVER
-user anonymous anonymous
+user USER PASSWORD
 FTPMODE
 ascii
 put mycamera_ip.html data/mycamera/mycamera_ip.html

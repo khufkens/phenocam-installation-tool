@@ -254,9 +254,9 @@ fi
 # set proper camera names in all config files
 # and upload scripts
 cat default_overlay0.conf	| sed "s/mycamera/$NEW_CAMERA_NAME/g" | sed "s/netcammodel/$MODELNAME/g" | sed "s/LOCAL/$LOCALTZ/g" > current_overlay0.conf
-cat default_ftp.scr 		| sed "s/mycamera/$NEW_CAMERA_NAME/g" | sed "s/FTPMODE/$FTPMODE/g" > ftp.scr
-cat default_IR_ftp.scr 		| sed "s/mycamera/$NEW_CAMERA_NAME/g" | sed "s/FTPMODE/$FTPMODE/g" > IR_ftp.scr
-cat default_IP_ftp.scr 		| sed "s/mycamera/$NEW_CAMERA_NAME/g" | sed "s/FTPMODE/$FTPMODE/g" > IP_ftp.scr
+cat default_ftp.scr 		| sed "s/mycamera/$NEW_CAMERA_NAME/g" | sed "s/FTPMODE/$FTPMODE/g" | sed "s/PASSWORD/$PASSWD/g" | sed "s/USER/$USER/g" > ftp.scr
+cat default_IR_ftp.scr 		| sed "s/mycamera/$NEW_CAMERA_NAME/g" | sed "s/FTPMODE/$FTPMODE/g" | sed "s/PASSWORD/$PASSWD/g" | sed "s/USER/$USER/g" > IR_ftp.scr
+cat default_IP_ftp.scr 		| sed "s/mycamera/$NEW_CAMERA_NAME/g" | sed "s/FTPMODE/$FTPMODE/g" | sed "s/PASSWORD/$PASSWD/g" | sed "s/USER/$USER/g" > IP_ftp.scr
 
 # rewrite everything into new files, just to be sure
 cat default_video0.conf > video0.conf
