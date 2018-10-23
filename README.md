@@ -6,7 +6,7 @@ PhenoCam Installation Tool (PIT) is a set of scripts for Linux/Mac OSX and Windo
 
 ### hardware prerequisites
 
-Please connect a computer and the PhenoCam to the same (wireless) router which has internet access. Once your camera is powered on and connected to the network you will need to find your camera’s network IP address. Make sure that the computer you are using was able to connect to the network and get an IP via DHCP.
+Please connect a computer and the PhenoCam to the same (wireless) router which has internet access. Once your camera is powered on and connected to the network you will need to find your camera’s network IP address. Make sure that the computer you are using was able to connect to the network and got an IP via DHCP.
 
 ![](./diagram.svg)
 
