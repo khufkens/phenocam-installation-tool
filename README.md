@@ -4,7 +4,23 @@ PhenoCam Installation Tool (PIT) is a set of scripts for Linux/Mac OSX and Windo
 
 ## Installation
 
-### prerequisites
+### hardware prerequisites
+
+Please connect a computer and the PhenoCam to the same (wireless) router which has internet access. Once your camera is powered on and connected to the network you will need to find your camera’s network IP address. Make sure that the computer you are using was able to connect to the network and get an IP via DHCP.
+
+![](./diagram.svg)
+
+The easiest way to find the camera’s IP address is to install [StarDot Tools](http://www.stardot.com/downloads). Run the StarDot Tools program and click “refresh”. The camera should be detected and the camera’s IP address shown (you may have to run Tools as administrator in Windows, depending on your settings).
+
+If you are configuring your camera with a non-Windows computer there are other things you can do to find the IP address of the camera. From a Linux or Mac OS X terminal window you should be able to type the following command:
+
+```bash
+arp -a
+```
+
+to get a list of the MAC addresses and IP’s of all the computers on the local network. The StarDot cameras have a MAC address that starts with 00:30 so you may be able to find the camera that way. Again, you may need help from the local network administrator for this step.
+
+### software prerequisites
 
 For the script to run successfully you will need a telnet client. As of Windows 7 telnet is not installed by default anymore but can still be downloaded from the Microsoft website. Full instructions can be found [here](http://technet.microsoft.com/en-us/library/cc771275%28v=ws.10%29.aspx).
 
