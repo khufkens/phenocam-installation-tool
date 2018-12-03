@@ -54,6 +54,17 @@ make
 sudo cp telnet/telnet /usr/local/bin/
 ```
 
+Alternatively you can install telnet using the [Homebrew](https://brew.sh/) framework using the following commands (skip the first if you have brew running).
+
+```bash
+# install brew (this might take a while 
+# and sideload substantially more code than the approach above
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+# install telnet
+brew install telnet
+```
+
 ### PhenoCam network
 
 clone the project to your home computer using the following command (with git installed)
