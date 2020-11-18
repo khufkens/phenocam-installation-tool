@@ -1,3 +1,11 @@
+```diff
+- THIS REPO HAS EXPIRED PLEASE USE THE REPO AT THE LINK BELOW
+```
+# NEW LINK:
+[https://github.com/bluegreen-labs/phenocam-installation-tool](https://github.com/bluegreen-labs/phenocam-installation-tool)
+
+---- 
+
 # PhenoCam Installation Tool (PIT)
 
 PhenoCam Installation Tool (PIT) is a set of scripts for Linux/Mac OSX and Windows taking care of the settings as needed by cameras installed by or associated with the [PhenoCam network](http://phenocam.sr.unh.edu).
